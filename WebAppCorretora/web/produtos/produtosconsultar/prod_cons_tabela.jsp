@@ -6,7 +6,7 @@
 
 <%@page import="java.util.*"%>
 <%@page import="model.Produtos"%>
-<%@page import="model.DAO.ProdutoDAO"%>
+<%@page import="model.DAO.ProdutosDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,7 @@
                     
             // Instância do Objeto           
             //Consultar Geral...
-            ProdutoDAO prodDAO = new ProdutoDAO();
+            ProdutosDAO prodDAO = new ProdutosDAO();
             lista = prodDAO.consultar_geral();
             if (prodDAO.consultar_geral() == null){
                 out.println("Produto não encontrado!");
@@ -52,20 +52,14 @@
         %>       
             <table class="table table-hover">
                 <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Valor</th>
-                    <th>Qtd</th>
+                    <th>Todos os Produtos</th>
                 </tr>
                 
         <%
                for(int i=0; i <= lista.size() - 1; i++){ 
         %>
                     <tr>
-                        <td><%=lista.get(i).getId()%></td>
-                        <td><%=lista.get(i).getNome()%></td>
-                        <td><%=lista.get(i).getValor()%></td>
-                        <td><%=lista.get(i).getQtd()%></td>
+                        <td><%=lista.get(i).getNome_produto()%></td>
                     </tr>
         <%       
                     }

@@ -7,7 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Produtos"%>
-<%@page import="model.DAO.ProdutoDAO"%>
+<%@page import="model.DAO.ProdutosDAO"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,21 +16,21 @@
         <title>Controle de Produtos</title>
     </head>
     <body>
-        <h1>Excluir Produtos</h1>
+        <h1>Cadastro de Produtos</h1>
         <%
             // Instância do Objeto
-            Produtos prod = new Produtos();
+            Produtos produto = new Produtos();
             
             // Atrib. valores ao obj
-            prod.setId( Integer.parseInt(request.getParameter("ident")));
-           
-            
-            //Excluir...
-            ProdutoDAO prodDAO = new ProdutoDAO();
-            if (prodDAO.excluir(prod)){
-                out.println("Produto excluído com sucesso!");
+            produto.setNome_produto(request.getParameter("nome"));            
+            //Gravar...
+            ProdutosDAO prodDAO = new ProdutosDAO();
+            if (prodDAO.cadastrar(produto)){
+                out.println("Produto inserido com sucesso!");
+                //Saída
+                out.println("<br> <b>Produto......: </b>" + produto.getNome_produto());
             }else{
-                out.println("Produto não excluído!");
+                out.println("Produto não inserido!");
             }
         %>
         

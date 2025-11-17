@@ -5,8 +5,8 @@
 package Config;
 import java.sql.*;
 
-/** @author Adilson Lima
- * Data: 15/09/2025
+/** @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
+ * Data: 16/11/2025
  */
 
 public class ConectaBanco {
@@ -15,7 +15,7 @@ public class ConectaBanco {
         Connection conn = null; 
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresas","root","563526");            
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/corretora","root","563526");            
         }catch(SQLException ex){
                 System.out.println("Erro - SQL: " + ex);
         }

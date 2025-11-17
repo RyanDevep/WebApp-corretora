@@ -7,7 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Produtos"%>
-<%@page import="model.DAO.ProdutoDAO"%>
+<%@page import="model.DAO.ProdutosDAO"%>
 
 <!DOCTYPE html>
 <html>
@@ -19,23 +19,17 @@
         <h1>Alteração de Produto</h1>
         <%
             // Instância do Objeto
-            Produtos prod = new Produtos();
+            Produtos produto = new Produtos();
             
             // Atrib. valores ao obj
-            prod.setId( Integer.parseInt(request.getParameter("ident")));
-            prod.setNome( request.getParameter("nome"));
-            prod.setValor( Float.parseFloat(request.getParameter("valor")));            
-            prod.setQtd(Integer.parseInt(request.getParameter("qtd")));
+            produto.setNome_produto(request.getParameter("produto"));
             
             //Gravar...
-            ProdutoDAO prodDAO = new ProdutoDAO();
-            if (prodDAO.alterar(prod)){
+            ProdutosDAO prodDAO = new ProdutosDAO();
+            if (prodDAO.alterar(produto)){
                 out.println("Produto alterado com sucesso!");
                 //Saída
-                out.println("<br><br> <b>Identificador: </b>" + prod.getId());
-                out.println("<br> <b>Produto......: </b>" + prod.getNome());
-                out.println("<br> <b>Valor........: </b>" + prod.getValor());
-                out.println("<br> <b>Quantidade...: </b>" + prod.getQtd());
+                out.println("<br> <b>Produto......: </b>" + produto.getNome_produto());
             }else{
                 out.println("Produto não alterado!");
             }

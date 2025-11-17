@@ -39,14 +39,13 @@ public class ProdutosDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            Retorna todas os registros da tabela produtos
-            String sql = "SELECT * from produtos";
+            String sql = "SELECT * FROM produtos";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
             while (rs.next()){
                 Produtos produto = new Produtos();
-                produto.setId_produto(Integer.parseInt(rs.getString("id")));
-                produto.setNome_produto(rs.getString("nome"));
+                produto.setNome_produto(rs.getString("nome_produto"));
                 
                 listaProdutos.add(produto);
                 n_reg++;
@@ -103,8 +102,7 @@ public class ProdutosDAO {
             
             if(rs.next()){ 
                 Produtos produto = new Produtos(); // Instância
-                produto.setId_produto(Integer.parseInt(rs.getString("id")));
-                produto.setNome_produto(rs.getString("nome"));
+                produto.setNome_produto(rs.getString("nome_produto"));
                 
                 conn.close();
                 return produto;
@@ -132,8 +130,7 @@ public class ProdutosDAO {
             int n_reg = 0;
             while (rs.next()){
                 Produtos produto = new Produtos();
-                produto.setId_produto(Integer.parseInt(rs.getString("id")));
-                produto.setNome_produto(rs.getString("nome"));
+                produto.setNome_produto(rs.getString("produto"));
                 
                 listaProdutos.add(produto);
                 n_reg++;
@@ -151,13 +148,13 @@ public class ProdutosDAO {
         }        
     }
     
-    public boolean excluirProdutoId( Produtos produto ) throws ClassNotFoundException{    
+    public boolean excluirProduto( Produtos produto ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
                     
-            String sql = "DELETE FROM produtos WHERE id_produto = " + produto.getId_produto();
+            String sql = "DELETE FROM produtos WHERE nome_produto = '" + produto.getNome_produto()+"'";
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -176,7 +173,7 @@ public class ProdutosDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "UPDATE produtos SET nome_produto ='" + produto.getNome_produto() + "' WHERE id_produto= " + produto.getId_produto();
+            String sql = "UPDATE produtos SET nome_produto ='" + produto.getNome_produto() + "' WHERE id_produto = " + produto.getId_produto();
             
             stmt.executeUpdate(sql);
             

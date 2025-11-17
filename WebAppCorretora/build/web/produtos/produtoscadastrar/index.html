@@ -10,10 +10,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h2>ADS Seguros</h2>
-        <p><a href="produtos/produtoscadastrar/index.html"> Cadastro de Produtos</a></p>
-        <p><a href="produtos/produtosconsultar/index.html"> Consulta de Produtos (MENU)</a></p>
-        <p><a href="produtos/produtosexcluir/index.html"> Apagar Produtos</a></p>
-        <p><a href="produtos/produtosalterar/index.html"> Alterar Produtos</a></p>
+        <h2>Produtos</h2>
+        <form method="post" action="prod_cad.jsp">
+            <p>Produto: <input type="text" name="nome"></p>
+            
+            <input type="submit" value="Salvar">
+            <input type="reset" value="Limpar">
+            
+        </form>
     </body>
 </html>
