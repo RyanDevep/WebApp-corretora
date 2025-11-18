@@ -1,0 +1,133 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author ryanb
+ */
+public class Producao {
+    private int id_producao;
+    private int id_segurado;
+    private int id_seguradora;
+    private int id_produtor;
+    private int id_produto;
+    private int id_op;
+    private String num_apolice;
+    private java.sql.Date vigencia;
+    private float premio_liquido;
+    private float percent_comissao;
+    private float pl_a_receber;
+    private String situacao;
+    private String forma_pgto;
+    
+    // getters e setters
+    public int getId_producao() {
+        return id_producao;
+    }
+
+    public void setId_producao(int id_producao) {
+        this.id_producao = id_producao;
+    }
+
+    public int getId_segurado() {
+        return id_segurado;
+    }
+
+    public void setId_segurado(int id_segurado) {
+        this.id_segurado = id_segurado;
+    }
+
+    public int getId_seguradora() {
+        return id_seguradora;
+    }
+
+    public void setId_seguradora(int id_seguradora) {
+        this.id_seguradora = id_seguradora;
+    }
+
+    public int getId_produtor() {
+        return id_produtor;
+    }
+
+    public void setId_produtor(int id_produtor) {
+        this.id_produtor = id_produtor;
+    }
+
+    public int getId_produto() {
+        return id_produto;
+    }
+
+    public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
+    }
+
+    public int getId_op() {
+        return id_op;
+    }
+
+    public void setId_op(int id_op) {
+        this.id_op = id_op;
+    }
+
+    public String getNum_apolice() {
+        return num_apolice;
+    }
+
+    public void setNum_apolice(String num_apolice) {
+        this.num_apolice = num_apolice;
+    }
+
+    public Date getVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(Date vigencia) {
+        this.vigencia = vigencia;
+    }
+
+    public double getPremio_liquido() {
+        return premio_liquido;
+    }
+
+    public void setPremio_liquido(float premio_liquido) {
+        this.premio_liquido = premio_liquido;
+    }
+
+    public double getPercent_comissao() {
+        return percent_comissao;
+    }
+
+    public void setPercent_comissao(float percent_comissao) {
+        this.percent_comissao = percent_comissao;
+    }
+
+    public double getPl_a_receber() {
+        return pl_a_receber;
+    }
+
+    public void setPl_a_receber(float pl_a_receber) {
+        this.pl_a_receber = pl_a_receber;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public String getForma_pgto() {
+        return forma_pgto;
+    }
+
+    public void setForma_pgto(String forma_pgto) {
+        this.forma_pgto = forma_pgto;
+    }
+    
+}

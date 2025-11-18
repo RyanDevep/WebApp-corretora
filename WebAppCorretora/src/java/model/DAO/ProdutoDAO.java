@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.DAO;
-import model.TipoOperacao;
+import model.Produto;
 import Config.ConectaBanco;
 
 import java.sql.*;
@@ -13,18 +13,18 @@ import java.util.*;
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  */
-public class TipoOperacaoDAO {
-    // + cadastrar( TipoOperacao ): boolean
-    public boolean cadastrar( TipoOperacao tipo_op ) throws ClassNotFoundException{    
+public class ProdutoDAO {
+    // + cadastrar( Produto ): boolean
+    public boolean cadastrar( Produto prod ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            String de inserção das informações de tipo no banco de dados
-            String sql = "INSERT INTO tipoOperacao (nome_op, status_op, descricao) VALUES ('"
-                    + tipo_op.getNome_op() + "', '"
-                    + tipo_op.getStatus_op()+ "', '"
-                    + tipo_op.getDescricao() + "')";
+            //            String de inserção das informações dos produtos no banco de dados
+            String sql = "INSERT INTO produtos (tipo_seguro, descricao, cobertura) VALUES ('"
+                    + prod.getTipo_seguro() + "', '"
+                    + prod.getDescricao() + "', '"
+                    + prod.getCobertura() + "')";
             stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             conn.close();
         }catch(SQLException ex){
@@ -35,25 +35,25 @@ public class TipoOperacaoDAO {
     }
     
     public List consultar_geral( ) throws ClassNotFoundException{
-        List listaTipos = new ArrayList();
+        List listaProdutos = new ArrayList();
         
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            Retorna todas os registros da tabela tipoOperacao
-            String sql = "SELECT * from tipoOperacao";
+            //            Retorna todas os registros da tabela produtos
+            String sql = "SELECT * FROM produtos";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
             while (rs.next()){
-                TipoOperacao tipo_op = new TipoOperacao();
-                tipo_op.setId_op(rs.getInt("id_op"));
-                tipo_op.setNome_op(rs.getString("nome_op"));
-                tipo_op.setStatus_op(rs.getString("status_op"));
-                tipo_op.setDescricao(rs.getString("descricao"));
+                Produto prod = new Produto();
+                prod.setId_produto(rs.getInt("id_produto"));
+                prod.setTipo_seguro(rs.getString("tipo_seguro"));
+                prod.setDescricao(rs.getString("descricao"));
+                prod.setCobertura(rs.getString("cobertura"));
                 
-                listaTipos.add(tipo_op);
+                listaProdutos.add(prod);
                 n_reg++;
             }
             conn.close();
@@ -61,7 +61,7 @@ public class TipoOperacaoDAO {
             if (n_reg == 0){
                 return null;
             }else{
-                return listaTipos;
+                return listaProdutos;
             }                                   
         }catch(SQLException ex){
             System.out.println("Erro SQL: " + ex);
@@ -69,13 +69,13 @@ public class TipoOperacaoDAO {
         }        
     }
 
-    public boolean excluir_Id( int id ) throws ClassNotFoundException{    
+    public boolean excluir( int id ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-                    
-            String sql = "DELETE FROM tipoOperacao WHERE id_op=" + id;
+            //        Recebe o id e concatena na String para concluir o delete
+            String sql = "DELETE FROM produtos WHERE id_produto =" + id;
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -88,17 +88,17 @@ public class TipoOperacaoDAO {
         }
     }
     
-    public boolean alterar( TipoOperacao tipo_op ) throws ClassNotFoundException{    
+    public boolean alterar( Produto pro ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "UPDATE tipoOperacao SET "
-                    + "nome_op='" + tipo_op.getNome_op()
-                    + "', status_op='" + tipo_op.getStatus_op()
-                    + "', descricao='" + tipo_op.getDescricao()
-                    + "' WHERE id_op=" + tipo_op.getId_op();
+            String sql = "UPDATE produtos SET "
+                    + "tipo_seguro='" + pro.getTipo_seguro()
+                    + "', descricao='" + pro.getDescricao()
+                    + "', cobertura='" + pro.getCobertura()
+                    + "' WHERE id_produto=" + pro.getId_produto();
             
             stmt.executeUpdate(sql);
             

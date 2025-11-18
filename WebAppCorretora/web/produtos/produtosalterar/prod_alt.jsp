@@ -23,6 +23,7 @@
             
             // Atrib. valores ao obj
             produto.setNome_produto(request.getParameter("produto"));
+            produto.setId_produto(Integer.parseInt(request.getParameter("id_produto")));
             
             //Gravar...
             ProdutosDAO prodDAO = new ProdutosDAO();

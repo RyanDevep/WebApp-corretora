@@ -18,12 +18,12 @@
     <body>
         <h1>Excluir Produtos</h1>
         <%
+           
             // Instância do Objeto
             Produtos prod = new Produtos();
             
             // Atrib. valores ao obj
-            prod.setNome_produto(request.getParameter("produto"));
-           
+            prod.setNome_produto(request.getParameter("produto")); 
             
             //Excluir...
             ProdutosDAO prodDAO = new ProdutosDAO();

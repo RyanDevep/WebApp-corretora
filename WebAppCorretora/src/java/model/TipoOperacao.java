@@ -8,26 +8,42 @@ package model;
  * Data: 15/11/2025
  */
 public class TipoOperacao {
-    //Atributos
-    private int id_tipo;
-    private String tipo;
-
-    //Métodos
-    public int getId_tipo() {
-        return id_tipo;
+    private int id_op;
+    private String nome_op;
+    private String status_op;
+    private String descricao;
+    
+    // getters e setters
+    public int getId_op() {
+        return id_op;
     }
 
-    public void setId_tipo(int id_tipo) {
-        this.id_tipo = id_tipo;
+    public void setId_op(int id_op) {
+        this.id_op = id_op;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNome_op() {
+        return nome_op;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setNome_op(String nome_op) {
+        this.nome_op = nome_op;
+    }
+
+    public String getStatus_op() {
+        return status_op;
+    }
+
+    public void setStatus_op(String status_op) {
+        this.status_op = status_op;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     
-   
 }

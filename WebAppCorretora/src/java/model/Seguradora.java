@@ -7,13 +7,14 @@ package model;
 /** @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  * Data: 15/11/2025
  */
-public class Seguradoras {
-    //Atributos
+public class Seguradora {
     private int id_seguradora;
-    private String cnpj;
     private String nome_seguradora;
+    private String cnpj;
+    private String telefone;
+    private String endereco;
 
-    //Métodos
+    // getters e setters
     public int getId_seguradora() {
         return id_seguradora;
     }
@@ -37,5 +38,22 @@ public class Seguradoras {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-   
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+    
+    
 }

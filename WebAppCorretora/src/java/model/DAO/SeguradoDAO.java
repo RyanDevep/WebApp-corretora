@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.DAO;
-import model.Seguradoras;
+import model.Segurado;
 import Config.ConectaBanco;
 
 import java.sql.*;
@@ -13,15 +13,20 @@ import java.util.*;
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  */
-public class SeguradorasDAO {
-    // + cadastrar( Seguradoras ): boolean
-    public boolean cadastrar( Seguradoras seguradora ) throws ClassNotFoundException{    
+public class SeguradoDAO {
+    // + cadastrar( Segurado ): boolean
+    public boolean cadastrar( Segurado seg ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            String de inserção das informações dos segurados no banco de dados
-            String sql = "INSERT INTO seguradoras(nome, cnpj) VALUES('" + seguradora.getNome_seguradora() + "', '" + seguradora.getCnpj()+ "')";
+            String sql = "INSERT INTO segurados(nome, cpf_cnpj, telefone, email, endereco) VALUES('" 
+           + seg.getNome() + "', '" 
+           + seg.getCpf_cnpj() + "', '" 
+           + seg.getTelefone() + "', '" 
+           + seg.getEmail() + "', '" 
+           + seg.getEndereco() + "')";
             stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             conn.close();
         }catch(SQLException ex){
@@ -32,24 +37,27 @@ public class SeguradorasDAO {
     }
     
     public List consultar_geral( ) throws ClassNotFoundException{
-        List listaSeguradoras = new ArrayList();
+        List listaSegurados = new ArrayList();
         
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            Retorna todas os registros da tabela segurados
-            String sql = "SELECT * from seguradoras";
+            String sql = "SELECT * from segurados";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
             while (rs.next()){
-                Seguradoras seguradora = new Seguradoras();
-                seguradora.setId_seguradora(Integer.parseInt(rs.getString("id")));
-                seguradora.setNome_seguradora(rs.getString("nome"));
-                seguradora.setCnpj(rs.getString("cnpj"));
+                Segurado seg = new Segurado();
+                seg.setId_segurado(rs.getInt("id_segurado"));
+                seg.setNome(rs.getString("nome"));
+                seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
+                seg.setTelefone(rs.getString("telefone"));
+                seg.setEmail(rs.getString("email"));
+                seg.setEndereco(rs.getString("endereco"));
                 
-                listaSeguradoras.add(seguradora);
+                listaSegurados.add(seg);
                 n_reg++;
             }
             conn.close();
@@ -57,7 +65,7 @@ public class SeguradorasDAO {
             if (n_reg == 0){
                 return null;
             }else{
-                return listaSeguradoras;
+                return listaSegurados;
             }                                   
         }catch(SQLException ex){
             System.out.println("Erro SQL: " + ex);
@@ -65,23 +73,25 @@ public class SeguradorasDAO {
         }        
     }
     
-    /*public Segurados consultar_id( Segurados p_prod ) throws ClassNotFoundException{
+    public Segurado consultar_id( Segurado s_seg ) throws ClassNotFoundException{
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            SELECT * FROM produtos WHERE pk_id = 3
-            String sql = "SELECT * FROM produtos WHERE pk_id = " + p_prod.getId();
+            //            
+            String sql = "SELECT * FROM segurados WHERE id_segurado = " + s_seg.getId_segurado();
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             if(rs.next()){ 
-                Segurados prod = new Segurados(); // Instância
-                prod.setId(Integer.parseInt(rs.getString("pk_id")));
-                prod.setNome(rs.getString("nome"));
-                prod.setValor(Float.parseFloat(rs.getString("valor")));
-                prod.setQtd(Integer.parseInt(rs.getString("qtd")));
+                Segurado seg = new Segurado(); // Instância
+                seg.setId_segurado(rs.getInt("id_segurado"));
+                seg.setNome(rs.getString("nome"));
+                seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
+                seg.setTelefone(rs.getString("telefone"));
+                seg.setEmail(rs.getString("email"));
+                seg.setEndereco(rs.getString("endereco"));
                 conn.close();
-                return prod;
+                return seg;
             } else {
                 conn.close();
                 return null;                               
@@ -91,25 +101,25 @@ public class SeguradorasDAO {
             return null;
         }
         
-    }   */ 
+    }   
     
-    public Seguradoras consultar_nome( Seguradoras s_seguradora ) throws ClassNotFoundException{
+    public Segurado consultar_nome( Segurado s_seg ) throws ClassNotFoundException{
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();        
-             //           
-            String sql = "SELECT * FROM seguradoras WHERE nome_seguradora like '" + s_seguradora.getNome_seguradora()+ "%'";
+             //           Consulta por nome (Mais específico)
+            String sql = "SELECT * FROM segurados WHERE nome like '" + s_seg.getNome() + "%'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             if(rs.next()){ 
-                Seguradoras seguradora = new Seguradoras(); // Instância
-                seguradora.setId_seguradora(Integer.parseInt(rs.getString("id")));
-                seguradora.setNome_seguradora(rs.getString("nome"));
-                seguradora.setCnpj(rs.getString("cnpj"));
+                Segurado segurado = new Segurado(); // Instância
+                segurado.setId_segurado(Integer.parseInt(rs.getString("id")));
+                segurado.setNome(rs.getString("nome"));
+                segurado.setCpf_cnpj(rs.getString("cpf_cnpj"));
                 
                 conn.close();
-                return seguradora;
+                return segurado;
             } else {
                 conn.close();
                 return null;                               
@@ -120,25 +130,25 @@ public class SeguradorasDAO {
         }        
     } 
     
-    public List consultar_nome(String s_nome) throws ClassNotFoundException{
-        List listaSeguradoras = new ArrayList();
+    /*public List consultar_nome(String s_nome) throws ClassNotFoundException{
+        List listaSegurados = new ArrayList();
         
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "SELECT * from segurados WHERE nome_seguradora like '%" + s_nome + "%'";
+            String sql = "SELECT * from segurados WHERE nome like '%" + s_nome + "%'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
             while (rs.next()){
-                Seguradoras seguradora = new Seguradoras();
-                seguradora.setId_seguradora(Integer.parseInt(rs.getString("id")));
-                seguradora.setNome_seguradora(rs.getString("nome"));
-                seguradora.setCnpj(rs.getString("cnpj"));
+                Segurado segurado = new Segurado();
+                segurado.setId_segurado(Integer.parseInt(rs.getString("id")));
+                segurado.setNome(rs.getString("nome"));
+                segurado.setCpf_cnpj(rs.getString("cpf_cnpj"));
                 
-                listaSeguradoras.add(seguradora);
+                listaSegurados.add(segurado);
                 n_reg++;
             }
             conn.close();
@@ -146,21 +156,21 @@ public class SeguradorasDAO {
             if (n_reg == 0){
                 return null;
             }else{
-                return listaSeguradoras;
+                return listaSegurados;
             }                                   
         }catch(SQLException ex){
             System.out.println("Erro SQL: " + ex);
             return null;
         }        
-    }
+    }*/
     
-    public boolean excluirCnpj( Seguradoras seguradora ) throws ClassNotFoundException{    
+    public boolean excluirCpfCnpj( Segurado seg ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
                     
-            String sql = "DELETE FROM seguradoras WHERE cnpj = " + seguradora.getCnpj();
+            String sql = "DELETE FROM segurados WHERE cpf_cnpj = " + seg.getCpf_cnpj();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -173,13 +183,18 @@ public class SeguradorasDAO {
         }
     }
     
-    public boolean alterar( Seguradoras seguradora ) throws ClassNotFoundException{    
+    public boolean alterar( Segurado seg ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "UPDATE seguradoras SET nome_seguradora ='" + seguradora.getNome_seguradora() + "' WHERE cnpj='" + seguradora.getCnpj()+"';";
+            String sql = "UPDATE segurados SET nome='" + seg.getNome()
+           + "', cpf_cnpj='" + seg.getCpf_cnpj()
+           + "', telefone='" + seg.getTelefone()
+           + "', email='" + seg.getEmail()
+           + "', endereco='" + seg.getEndereco()
+           + "' WHERE id_segurado=" + seg.getId_segurado();
             
             stmt.executeUpdate(sql);
             

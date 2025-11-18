@@ -18,6 +18,7 @@
         <%                     
             // Instância do Objeto           
             Produtos prod = new Produtos();
+
             prod.setNome_produto(request.getParameter("produto"));            
             
             //Consultar nome...
@@ -30,6 +31,7 @@
                //Saída
         %>
                 <form method="post" action="prod_alt.jsp">
+                    <input type="hidden" name="id_produto" value="<%=prod.getId_produto()%>">
                     <p>Produto: <input type="text" name="produto" value="<%=prod.getNome_produto()%>"></p>
 
                     <input type="submit" value="Alterar">

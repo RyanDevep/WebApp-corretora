@@ -7,13 +7,14 @@ package model;
 /** @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  * Data: 15/11/2025
  */
-public class Produtores {
-    //Atributos
+public class Produtor {
     private int id_produtor;
-    private String cpf;
     private String nome_produtor;
-
-    //Métodos
+    private String cpf;
+    private String telefone;
+    private String email;
+    
+// getters e setters
 
     public int getId_produtor() {
         return id_produtor;
@@ -38,5 +39,21 @@ public class Produtores {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-   
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 }
