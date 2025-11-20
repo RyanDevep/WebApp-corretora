@@ -5,8 +5,8 @@
 --%>
 
 <%@page import="java.util.*"%>
-<%@page import="model.Produtos"%>
-<%@page import="model.DAO.ProdutosDAO"%>
+<%@page import="model.Producao"%>
+<%@page import="model.DAO.ProducaoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,14 +39,14 @@
         <h2>Consulta de Produtos Geral</h2>
         
         <%
-            List<Produtos> lista = new ArrayList();
+            List<Producao> lista = new ArrayList();
                     
             // Instância do Objeto           
             //Consultar Geral...
-            ProdutosDAO prodDAO = new ProdutosDAO();
+            ProducaoDAO prodDAO = new ProducaoDAO();
             lista = prodDAO.consultar_geral();
             if (prodDAO.consultar_geral() == null){
-                out.println("Produto não encontrado!");
+                out.println("Producao não encontrada!");
             }else{
                //Saída
         %>       
@@ -59,7 +59,7 @@
                for(int i=0; i <= lista.size() - 1; i++){ 
         %>
                     <tr>
-                        <td><%=lista.get(i).getNome_produto()%></td>
+                        <td><%=lista.get(i).getSituacao()%></td>
                     </tr>
         <%       
                     }

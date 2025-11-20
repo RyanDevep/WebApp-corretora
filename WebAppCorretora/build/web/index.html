@@ -5,15 +5,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>Corretora</title>
+        <title>ADS Corretora</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
     </head>
-    <body>
-        <h2>ADS Seguros</h2>
-        <p><a href="produtos/produtoscadastrar/index.html"> Cadastro de Produtos</a></p>
-        <p><a href="produtos/produtosconsultar/index.html"> Consulta de Produtos (MENU)</a></p>
-        <p><a href="produtos/produtosexcluir/index.html"> Apagar Produtos</a></p>
-        <p><a href="produtos/produtosalterar/index.html"> Alterar Produtos</a></p>
+    <body style="margin: 0; padding: 0;">   
+        <div style="display: flex; height: calc(100vh - 50px);" >
+            <!-- Barra lateral de opções -->
+            <iframe id="menu-frame" name="menuFrame" src="menu.html" title="Menu de navegação" style="width: 305px; border: #ccc;"></iframe>
+            <!-- Área de Conteúdo -->
+            <iframe id="prin-frame" name="principal" src="principal.html" title="Conteúdo Principal da página" style="flex-grow: 1; border: #ccc;"></iframe>
+        </div>
     </body>
 </html>

@@ -5,12 +5,10 @@
 package model.DAO;
 import model.Segurado;
 import Config.ConectaBanco;
-
 import java.sql.*;
 import java.util.*;
 
 /**
- *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  */
 public class SeguradoDAO {
@@ -130,39 +128,34 @@ public class SeguradoDAO {
         }        
     } 
     
-    /*public List consultar_nome(String s_nome) throws ClassNotFoundException{
-        List listaSegurados = new ArrayList();
-        
+    public Segurado consultar_CpfCnpj(String cpfCnpj) throws ClassNotFoundException{
+ 
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "SELECT * from segurados WHERE nome like '%" + s_nome + "%'";
+            String sql = "SELECT * from segurados WHERE cpf_cnpj = '" + cpfCnpj + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
-            
-            int n_reg = 0;
-            while (rs.next()){
-                Segurado segurado = new Segurado();
-                segurado.setId_segurado(Integer.parseInt(rs.getString("id")));
-                segurado.setNome(rs.getString("nome"));
-                segurado.setCpf_cnpj(rs.getString("cpf_cnpj"));
+
+            if (rs.next()){
+                Segurado seg = new Segurado();
+                seg.setId_segurado(rs.getInt("id_segurado"));
+                seg.setNome(rs.getString("nome"));
+                seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
+                seg.setTelefone(rs.getString("telefone"));
+                seg.setEmail(rs.getString("email"));
+                seg.setEndereco(rs.getString("endereco"));
                 
-                listaSegurados.add(segurado);
-                n_reg++;
-            }
-            conn.close();
-            
-            if (n_reg == 0){
+                return seg;
+            } else {
                 return null;
-            }else{
-                return listaSegurados;
             }                                   
         }catch(SQLException ex){
             System.out.println("Erro SQL: " + ex);
             return null;
         }        
-    }*/
+    }
     
     public boolean excluirCpfCnpj( Segurado seg ) throws ClassNotFoundException{    
         Connection conn = null;
@@ -190,11 +183,10 @@ public class SeguradoDAO {
             Statement stmt = conn.createStatement();
             //            
             String sql = "UPDATE segurados SET nome='" + seg.getNome()
-           + "', cpf_cnpj='" + seg.getCpf_cnpj()
-           + "', telefone='" + seg.getTelefone()
-           + "', email='" + seg.getEmail()
-           + "', endereco='" + seg.getEndereco()
-           + "' WHERE id_segurado=" + seg.getId_segurado();
+                    + "', telefone='" + seg.getTelefone()
+                    + "', email='" + seg.getEmail()
+                    + "', endereco='" + seg.getEndereco()
+                    + "' WHERE cpf_cnpj= '" + seg.getCpf_cnpj() +"'";
             
             stmt.executeUpdate(sql);
             
@@ -206,4 +198,6 @@ public class SeguradoDAO {
         }
         return true;
     }
+    
+    
 }
