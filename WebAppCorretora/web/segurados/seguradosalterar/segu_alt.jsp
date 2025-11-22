@@ -42,6 +42,6 @@
                 out.println("Segurado não alterado!");
             }
         %>
-        
+        <a href="../seguradoscadastrar/index.html">Voltar</a>
     </body>
 </html>

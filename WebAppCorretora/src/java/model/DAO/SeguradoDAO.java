@@ -70,37 +70,7 @@ public class SeguradoDAO {
             return null;
         }        
     }
-    
-    public Segurado consultar_id( Segurado s_seg ) throws ClassNotFoundException{
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            
-            String sql = "SELECT * FROM segurados WHERE id_segurado = " + s_seg.getId_segurado();
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
-            
-            if(rs.next()){ 
-                Segurado seg = new Segurado(); // Instância
-                seg.setId_segurado(rs.getInt("id_segurado"));
-                seg.setNome(rs.getString("nome"));
-                seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
-                seg.setTelefone(rs.getString("telefone"));
-                seg.setEmail(rs.getString("email"));
-                seg.setEndereco(rs.getString("endereco"));
-                conn.close();
-                return seg;
-            } else {
-                conn.close();
-                return null;                               
-            }
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }
         
-    }   
-    
     public Segurado consultar_nome( Segurado s_seg ) throws ClassNotFoundException{
         Connection conn = null;
         try{
@@ -128,14 +98,14 @@ public class SeguradoDAO {
         }        
     } 
     
-    public Segurado consultar_CpfCnpj(String cpfCnpj) throws ClassNotFoundException{
+    public Segurado consultar_CpfCnpj(Segurado segu) throws ClassNotFoundException{
  
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "SELECT * from segurados WHERE cpf_cnpj = '" + cpfCnpj + "'";
+            String sql = "SELECT * from segurados WHERE cpf_cnpj = '" + segu.getCpf_cnpj() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
             if (rs.next()){
@@ -157,13 +127,18 @@ public class SeguradoDAO {
         }        
     }
     
-    public boolean excluirCpfCnpj( Segurado seg ) throws ClassNotFoundException{    
+    public boolean excluir(Segurado segu) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
+            
+            Segurado buscar = consultar_CpfCnpj(segu);
+            if (buscar == null) {
+            return false;// não encontrou ninguém
+            }
                     
-            String sql = "DELETE FROM segurados WHERE cpf_cnpj = " + seg.getCpf_cnpj();
+            String sql = "DELETE FROM segurados WHERE id_segurado =" + buscar.getId_segurado();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -198,6 +173,5 @@ public class SeguradoDAO {
         }
         return true;
     }
-    
-    
+       
 }

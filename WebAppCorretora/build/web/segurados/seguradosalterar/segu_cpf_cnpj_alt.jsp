@@ -23,7 +23,7 @@
             
             //Consultar CPF/CNPJ...
             SeguradoDAO seguDAO = new SeguradoDAO();            
-            segu = seguDAO.consultar_CpfCnpj(request.getParameter("cpf_cnpj"));
+            segu = seguDAO.consultar_CpfCnpj(segu);
             
             if (segu == null){
                 out.println("Segurado não encontrado!");
@@ -48,5 +48,6 @@
                 out.println("<br> <b>Endereço </b>" + segu.getEndereco()); 
             }
         %>
+        <a href="../seguradoscadastrar/index.html">Voltar</a>
     </body>
 </html>

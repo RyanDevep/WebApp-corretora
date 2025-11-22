@@ -8,20 +8,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <!-- 
           Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
           Created: 20/11/2025
-          Description: Página de alteração de Segurado.
+          Description: Página de exclusão de Seguradora.
         -->
         <title>Controle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h2>Consultar Segurado - (Alterar)</h2>
-        <p>Digite o CPF/CNPJ do segurado que deseja alterar. </p>
-        <form method="post" action="segu_cpf_cnpj_alt.jsp">
-            <p>CPF/CNPJ:<input type="text" name="cpf_cnpj" required></p>
-            <input type="submit" value="Pesquisar">
-            <input type="reset" value="Limpar">          
+        <h2>Consultar Seguradora - (Excluir)</h2>
+        <p>Digite o CNPJ da seguradora que deseja excluir. </p>
+        <form method="post" action="seg_excluir.jsp">
+            <p>CPF/CNPJ:<input type="text" name="cnpj" required></p>
+            <input type="submit" value="Excluir">
+            <input type="reset" value="Limpar">
         </form>
-        <a href="../seguradoscadastrar/index.html">Voltar</a>
+        <a href="../seguradorascadastrar/index.html">Voltar</a>
     </body>
 </html>

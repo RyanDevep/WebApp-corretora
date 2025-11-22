@@ -15,14 +15,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h2>Gerenciar Segurados</h2>
-        <a href="seguradosalterar/index.html">Alterar</a>
-        <form method="post" action="segurado_cad.jsp">
+        <h2>Gerenciar Seguradoras</h2>
+        <a href="../seguradorasalterar/index.html">Alterar</a>
+        <a href="../seguradorasexcluir/index.html">Excluir</a>
+        <a href="../seguradorasconsultar/seg_tabela.jsp">Consultar</a>
+        <h3>Cadastrar nova Seguradora:</h3>
+        <form method="post" action="seguradora_cad.jsp">
         <fieldset>
-            <p>Nome:<input type="text" name="nome" size="50" maxlength="100"></p>
-            <p>CPF/CNPJ:<input type="text" name="cpf_cnpj" size="18" maxlength="18"></p>
+            <p>Razão Social:<input type="text" name="nome_seguradora" size="50" maxlength="100"></p>
+            <p>CNPJ:<input type="text" name="cnpj" size="18" maxlength="18"></p>
             <p>Telefone:<input type="text" name="telefone" size="15" maxlength="15"></p>
-            <p>Email:<input type="text" name="email" size="50" maxlength="100"></p>
             <p>Endereço:<input type="text" name="endereco" size="50" maxlength="150"></p>
         </fieldset>
         <input type="submit" value="Salvar">

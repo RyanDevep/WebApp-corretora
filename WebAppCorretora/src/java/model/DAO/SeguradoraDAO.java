@@ -70,14 +70,48 @@ public class SeguradoraDAO {
             return null;
         }        
     }
-            
-    public boolean excluir( int id ) throws ClassNotFoundException{    
+    
+        public Seguradora consultar_Cnpj(Seguradora segu) throws ClassNotFoundException{
+ 
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            // Excluir seguradora por ID
-            String sql = "DELETE FROM seguradoras WHERE id_seguradora=" + id;
+            //            
+            String sql = "SELECT * from seguradoras WHERE cnpj = '" + segu.getCnpj() + "'";
+            ResultSet rs = stmt.executeQuery(sql); // SELECT
+
+            if (rs.next()){
+                Seguradora seg = new Seguradora();
+                seg.setId_seguradora(rs.getInt("id_seguradora"));
+                seg.setNome_seguradora(rs.getString("nome_seguradora"));
+                seg.setCnpj(rs.getString("cnpj"));
+                seg.setTelefone(rs.getString("telefone"));
+                seg.setEndereco(rs.getString("endereco"));
+                
+                return seg;
+            } else {
+                return null;
+            }                                   
+        }catch(SQLException ex){
+            System.out.println("Erro SQL: " + ex);
+            return null;
+        }        
+    }
+
+            
+    public boolean excluir(Seguradora segu) throws ClassNotFoundException{    
+        Connection conn = null;
+        try{
+            conn = ConectaBanco.conectar();
+            Statement stmt = conn.createStatement();
+            
+            Seguradora buscar = consultar_Cnpj(segu);
+            if (buscar == null) {
+            return false;// não encontrou nada
+            }
+                    
+            String sql = "DELETE FROM seguradoras WHERE id_seguradora =" + buscar.getId_seguradora();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -101,7 +135,7 @@ public class SeguradoraDAO {
                     + "', cnpj='" + segu.getCnpj()
                     + "', telefone='" + segu.getTelefone()
                     + "', endereco='" + segu.getEndereco()
-                    + "' WHERE id_seguradora=" + segu.getId_seguradora();
+                    + "' WHERE cnpj= '" + segu.getCnpj() +"'";
             
             stmt.executeUpdate(sql);
             
