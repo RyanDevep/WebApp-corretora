@@ -19,13 +19,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <a href="../seguradorasalterar/index.html">Alterar</a>
         <a href="../seguradorasexcluir/index.html">Excluir</a>
         <a href="../seguradorasconsultar/seg_tabela.jsp">Consultar</a>
+        <a href="../../gerenciar.html">MENU</a>
         <h3>Cadastrar nova Seguradora:</h3>
         <form method="post" action="seguradora_cad.jsp">
         <fieldset>
-            <p>Razão Social:<input type="text" name="nome_seguradora" size="50" maxlength="100"></p>
-            <p>CNPJ:<input type="text" name="cnpj" size="18" maxlength="18"></p>
-            <p>Telefone:<input type="text" name="telefone" size="15" maxlength="15"></p>
-            <p>Endereço:<input type="text" name="endereco" size="50" maxlength="150"></p>
+            <p>Razão Social:<input type="text" name="nome_seguradora" size="50" maxlength="100" required></p>
+            <p>CNPJ:<input type="text" name="cnpj" size="18" maxlength="18" required></p>
+            <p>Telefone:<input type="text" name="telefone" size="15" maxlength="15" required></p>
+            <p>Endereço:<input type="text" name="endereco" size="50" maxlength="150" required></p>
         </fieldset>
         <input type="submit" value="Salvar">
         <input type="reset" value="Limpar">

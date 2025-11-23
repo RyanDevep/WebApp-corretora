@@ -7,7 +7,6 @@ import model.Producao;
 import Config.ConectaBanco;
 import java.sql.*;
 import java.util.*;
-
 /**
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.

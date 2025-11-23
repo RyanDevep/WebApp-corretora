@@ -5,19 +5,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>Controle de Produtos</title>
+        <!-- 
+          Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
+          Created: 20/11/2025
+          Description: Página de exclusão de Produto.
+        -->
+        <title>Controle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h2>Produtos - Excluir</h2>
-        <form method="post" action="prod_exclui.jsp">
-            <p>Produto: <input type="text" name="produto"></p>
-            
-            
+        <h2>Consultar Produto - (Excluir)</h2>
+        <p>Digite o Produto que deseja excluir. </p>
+        <form method="post" action="prod_excluir.jsp">
+            <p>Produto:<input type="text" name="tipo_seguro" required></p>
             <input type="submit" value="Excluir">
             <input type="reset" value="Limpar">
-            
         </form>
+        <a href="../produtoscadastrar/index.html">Voltar</a>
     </body>
 </html>

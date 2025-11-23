@@ -71,7 +71,7 @@ public class SeguradoraDAO {
         }        
     }
     
-        public Seguradora consultar_Cnpj(Seguradora segu) throws ClassNotFoundException{
+    public Seguradora consultar_Cnpj(Seguradora segu) throws ClassNotFoundException{
  
         Connection conn = null;
         try{
@@ -98,7 +98,6 @@ public class SeguradoraDAO {
             return null;
         }        
     }
-
             
     public boolean excluir(Seguradora segu) throws ClassNotFoundException{    
         Connection conn = null;

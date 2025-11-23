@@ -71,42 +71,46 @@ public class ProdutorDAO {
         }        
     }
     
-    public Produtor consultar_cpf( Produtor pro ) throws ClassNotFoundException{
+    public Produtor consultar_Cpf(Produtor prod) throws ClassNotFoundException{
+ 
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "SELECT * FROM produtores WHERE cpf = '" + pro.getCpf()+"'";
+            String sql = "SELECT * from produtores WHERE cpf = '" + prod.getCpf() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
-            
-            if(rs.next()){ 
-                Produtor prod = new Produtor(); // Instância
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setNome_produtor(rs.getString("nome_produtor"));
-                prod.setCpf(rs.getString("cpf"));
-                prod.setTelefone(rs.getString("telefone"));
-                prod.setEmail(rs.getString("email"));
-                conn.close();
-                return prod;
+
+            if (rs.next()){
+                Produtor pro = new Produtor();
+                pro.setId_produtor(rs.getInt("id_produtor"));
+                pro.setNome_produtor(rs.getString("nome_produtor"));
+                pro.setCpf(rs.getString("cpf"));
+                pro.setTelefone(rs.getString("telefone"));
+                pro.setEmail(rs.getString("email"));
+                
+                return pro;
             } else {
-                conn.close();
-                return null;                               
-            }
+                return null;
+            }                                   
         }catch(SQLException ex){
             System.out.println("Erro SQL: " + ex);
             return null;
-        }
-        
+        }        
     }  
             
-    public boolean excluir_cpf( Produtor pro ) throws ClassNotFoundException{    
+    public boolean excluir(Produtor pro) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
+            
+            Produtor buscar = consultar_Cpf(pro);
+            if (buscar == null) {
+            return false;// não encontrou ninguém
+            }
                     
-            String sql = "DELETE FROM produtores WHERE cpf = " + pro.getCpf();
+            String sql = "DELETE FROM produtores WHERE id_produtor =" + buscar.getId_produtor();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -125,7 +129,10 @@ public class ProdutorDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "UPDATE produtores SET nome_produtor ='" + pro.getNome_produtor() + "' WHERE cpf='" + pro.getCpf()+"';";
+            String sql = "UPDATE produtores SET nome_produtor='" + pro.getNome_produtor()
+                    + "', telefone='" + pro.getTelefone()
+                    + "', email='" + pro.getEmail()
+                    + "' WHERE cpf = '" + pro.getCpf() +"'";
             
             stmt.executeUpdate(sql);
             

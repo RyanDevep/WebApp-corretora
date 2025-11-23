@@ -32,9 +32,9 @@
         %>
                 <form method="post" action="seg_alt.jsp">
                     <p>CNPJ: <input type="text" name="cnpj" readonly="true" value="<%=segu.getCnpj()%>"></p>
-                    <p>Razão Social: <input type="text" name="nome_seguradora" value="<%=segu.getNome_seguradora()%>"></p>
-                    <p>Telefone: <input type="text" name="telefone" value="<%=segu.getTelefone()%>"></p>
-                    <p>Endereço: <input type="text" name="endereco" value="<%=segu.getEndereco()%>"></p>
+                    <p>Razão Social: <input type="text" name="nome_seguradora" required value="<%=segu.getNome_seguradora()%>"></p>
+                    <p>Telefone: <input type="text" name="telefone" required value="<%=segu.getTelefone()%>"></p>
+                    <p>Endereço: <input type="text" name="endereco" required value="<%=segu.getEndereco()%>"></p>
                     <input type="submit" value="Alterar">
                     <input type="reset" value="Limpar">
             

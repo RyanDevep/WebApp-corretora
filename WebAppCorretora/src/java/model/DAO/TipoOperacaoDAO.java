@@ -69,13 +69,45 @@ public class TipoOperacaoDAO {
         }        
     }
 
-    public boolean excluir_Id( int id ) throws ClassNotFoundException{    
+    public TipoOperacao consultar_tipo(TipoOperacao t_tipo) throws ClassNotFoundException{
+ 
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
+            //            
+            String sql = "SELECT * from tipoOperacao WHERE nome_op = '" + t_tipo.getNome_op() + "'";
+            ResultSet rs = stmt.executeQuery(sql); // SELECT
+
+            if (rs.next()){
+                TipoOperacao tipo = new TipoOperacao();
+                tipo.setId_op(rs.getInt("id_op"));
+                tipo.setNome_op(rs.getString("nome_op"));
+                tipo.setStatus_op(rs.getString("status_op"));
+                tipo.setDescricao(rs.getString("descricao"));
+                
+                return tipo;
+            } else {
+                return null;
+            }                                   
+        }catch(SQLException ex){
+            System.out.println("Erro SQL: " + ex);
+            return null;
+        }        
+    }
+
+    public boolean excluir(TipoOperacao tipo) throws ClassNotFoundException{    
+        Connection conn = null;
+        try{
+            conn = ConectaBanco.conectar();
+            Statement stmt = conn.createStatement();
+            
+            TipoOperacao buscar = consultar_tipo(tipo);
+            if (buscar == null) {
+            return false;// não encontrou ninguém
+            }
                     
-            String sql = "DELETE FROM tipoOperacao WHERE id_op=" + id;
+            String sql = "DELETE FROM tipoOperacao WHERE id_op =" + buscar.getId_op();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -88,17 +120,21 @@ public class TipoOperacaoDAO {
         }
     }
     
-    public boolean alterar( TipoOperacao tipo_op ) throws ClassNotFoundException{    
+    public boolean alterar( TipoOperacao tipo ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
+            
+            TipoOperacao buscar = consultar_tipo(tipo);
+            if (buscar == null) {
+            return false;// não encontrou ninguém
+            }
             //            
-            String sql = "UPDATE tipoOperacao SET "
-                    + "nome_op='" + tipo_op.getNome_op()
-                    + "', status_op='" + tipo_op.getStatus_op()
-                    + "', descricao='" + tipo_op.getDescricao()
-                    + "' WHERE id_op=" + tipo_op.getId_op();
+            String sql = "UPDATE tipoOperacao SET nome_op ='" + tipo.getNome_op()
+                    + "', status_op ='" + tipo.getStatus_op()
+                    + "', descricao ='" + tipo.getDescricao()
+                    + "' WHERE id_op = '" + buscar.getId_op() +"'";
             
             stmt.executeUpdate(sql);
             

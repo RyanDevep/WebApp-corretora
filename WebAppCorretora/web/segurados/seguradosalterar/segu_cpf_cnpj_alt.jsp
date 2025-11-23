@@ -32,10 +32,10 @@
         %>
                 <form method="post" action="segu_alt.jsp">
                     <p>CPF/CNPJ: <input type="text" name="cpf_cnpj" readonly="true" value="<%=segu.getCpf_cnpj()%>"></p>
-                    <p>Nome: <input type="text" name="nome" value="<%=segu.getNome()%>"></p>
-                    <p>Telefone: <input type="text" name="telefone" value="<%=segu.getTelefone()%>"></p>
-                    <p>Email: <input type="text" name="email" value="<%=segu.getEmail()%>"></p>
-                    <p>Endereço: <input type="text" name="endereco" value="<%=segu.getEndereco()%>"></p>
+                    <p>Nome: <input type="text" name="nome" required value="<%=segu.getNome()%>"></p>
+                    <p>Telefone: <input type="text" name="telefone" required value="<%=segu.getTelefone()%>"></p>
+                    <p>Email: <input type="text" name="email" required value="<%=segu.getEmail()%>"></p>
+                    <p>Endereço: <input type="text" name="endereco" required value="<%=segu.getEndereco()%>"></p>
                     <input type="submit" value="Alterar">
                     <input type="reset" value="Limpar">
             

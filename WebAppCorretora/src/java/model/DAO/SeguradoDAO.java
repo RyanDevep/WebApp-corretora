@@ -69,33 +69,6 @@ public class SeguradoDAO {
             System.out.println("Erro SQL: " + ex);
             return null;
         }        
-    }
-        
-    public Segurado consultar_nome( Segurado s_seg ) throws ClassNotFoundException{
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();        
-             //           Consulta por nome (Mais específico)
-            String sql = "SELECT * FROM segurados WHERE nome like '" + s_seg.getNome() + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
-            
-            if(rs.next()){ 
-                Segurado segurado = new Segurado(); // Instância
-                segurado.setId_segurado(Integer.parseInt(rs.getString("id")));
-                segurado.setNome(rs.getString("nome"));
-                segurado.setCpf_cnpj(rs.getString("cpf_cnpj"));
-                
-                conn.close();
-                return segurado;
-            } else {
-                conn.close();
-                return null;                               
-            }
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
     } 
     
     public Segurado consultar_CpfCnpj(Segurado segu) throws ClassNotFoundException{
@@ -126,6 +99,34 @@ public class SeguradoDAO {
             return null;
         }        
     }
+    
+    public List<Segurado> consultar_nome(String nome) throws ClassNotFoundException {
+    List<Segurado> lista = new ArrayList<>();
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+        
+        // Usando LIKE para permitir buscas parciais
+        String sql = "SELECT * FROM segurados WHERE nome LIKE '%" + nome + "%'";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            Segurado seg = new Segurado();
+            seg.setId_segurado(rs.getInt("id_segurado"));
+            seg.setNome(rs.getString("nome"));
+            seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            seg.setTelefone(rs.getString("telefone"));
+            seg.setEmail(rs.getString("email"));
+            seg.setEndereco(rs.getString("endereco"));
+            
+            lista.add(seg);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+    }
+    return lista;
+}
     
     public boolean excluir(Segurado segu) throws ClassNotFoundException{    
         Connection conn = null;

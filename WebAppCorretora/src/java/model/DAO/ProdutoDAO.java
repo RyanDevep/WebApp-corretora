@@ -67,14 +67,46 @@ public class ProdutoDAO {
             return null;
         }        
     }
-
-    public boolean excluir( int id ) throws ClassNotFoundException{    
+    
+    public Produto consultar_prod(Produto produ) throws ClassNotFoundException{
+ 
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //        Recebe o id e concatena na String para concluir o delete
-            String sql = "DELETE FROM produtos WHERE id_produto =" + id;
+            //            
+            String sql = "SELECT * from produtos WHERE tipo_seguro = '" + produ.getTipo_seguro() + "'";
+            ResultSet rs = stmt.executeQuery(sql); // SELECT
+
+            if (rs.next()){
+                Produto prod = new Produto();
+                prod.setId_produto(rs.getInt("id_produto"));
+                prod.setTipo_seguro(rs.getString("tipo_seguro"));
+                prod.setDescricao(rs.getString("descricao"));
+                prod.setCobertura(rs.getString("cobertura"));
+                
+                return prod;
+            } else {
+                return null;
+            }                                   
+        }catch(SQLException ex){
+            System.out.println("Erro SQL: " + ex);
+            return null;
+        }        
+    }
+
+    public boolean excluir(Produto prod) throws ClassNotFoundException{    
+        Connection conn = null;
+        try{
+            conn = ConectaBanco.conectar();
+            Statement stmt = conn.createStatement();
+            
+            Produto buscar = consultar_prod(prod);
+            if (buscar == null) {
+            return false;// não encontrou ninguém
+            }
+                    
+            String sql = "DELETE FROM produtos WHERE id_produto =" + buscar.getId_produto();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
                 return false;
@@ -87,17 +119,15 @@ public class ProdutoDAO {
         }
     }
     
-    public boolean alterar( Produto pro ) throws ClassNotFoundException{    
+    public boolean alterar( Produto prod ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            
-            String sql = "UPDATE produtos SET "
-                    + "tipo_seguro='" + pro.getTipo_seguro()
-                    + "', descricao='" + pro.getDescricao()
-                    + "', cobertura='" + pro.getCobertura()
-                    + "' WHERE id_produto=" + pro.getId_produto();
+            String sql = "UPDATE produtos SET descricao ='" + prod.getDescricao()
+                    + "', cobertura ='" + prod.getCobertura()
+                    + "' WHERE tipo_seguro = '" + prod.getTipo_seguro() +"'";
             
             stmt.executeUpdate(sql);
             

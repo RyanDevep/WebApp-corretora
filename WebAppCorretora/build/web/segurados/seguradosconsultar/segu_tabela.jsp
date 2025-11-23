@@ -52,6 +52,7 @@
         %>       
             <table class="table table-hover">
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>CPF/CNPJ</th>
                     <th>Telefone</th>
@@ -63,6 +64,7 @@
                for(int i=0; i <= lista.size() - 1; i++){ 
         %>
                     <tr>
+                        <td><%=lista.get(i).getId_segurado()%></td>
                         <td><%=lista.get(i).getNome()%></td>
                         <td><%=lista.get(i).getCpf_cnpj()%></td>
                         <td><%=lista.get(i).getTelefone()%></td>

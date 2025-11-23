@@ -33,6 +33,6 @@
                 out.println("Segurado não excluído!");
             }
         %>
-        
+        <a href="../seguradoscadastrar/index.html">Voltar</a>
     </body>
 </html>

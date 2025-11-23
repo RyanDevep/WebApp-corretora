@@ -38,6 +38,6 @@
             out.println("<h3>Erro: Segurado não pode ser cadastrado!</h3>");
         }
         %>
-        <a href="../gerenciar.html"></a>
+        <a href="index.html">Voltar</a>
     </body>
 </html>

@@ -1,40 +1,43 @@
 <%-- 
-    Document   : Controle de Produtos
-    Created on : 8 de set. de 2025, 21:08:37
-    Author     : Adilson Lima
+    Document   : Corretora
+    Created on : 20 de nov. de 2025, 17:44:08
+    Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
 --%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Produtos"%>
-<%@page import="model.DAO.ProdutosDAO"%>
+<%@page import="model.Produto"%>
+<%@page import="model.DAO.ProdutoDAO"%>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Controle de Produtos</title>
+        <title>Controle</title>
     </head>
     <body>
         <h1>Alteração de Produto</h1>
         <%
             // Instância do Objeto
-            Produtos produto = new Produtos();
+            Produto prod = new Produto();
             
-            // Atrib. valores ao obj
-            produto.setNome_produto(request.getParameter("produto"));
-            produto.setId_produto(Integer.parseInt(request.getParameter("id_produto")));
+            // Atrib. valores ao objeto           
+            prod.setTipo_seguro( request.getParameter("tipo_seguro"));
+            prod.setDescricao( request.getParameter("descricao"));
+            prod.setCobertura( request.getParameter("cobertura"));
             
             //Gravar...
-            ProdutosDAO prodDAO = new ProdutosDAO();
-            if (prodDAO.alterar(produto)){
+            ProdutoDAO proDAO = new ProdutoDAO();
+            if (proDAO.alterar(prod)){
                 out.println("Produto alterado com sucesso!");
                 //Saída
-                out.println("<br> <b>Produto......: </b>" + produto.getNome_produto());
+                out.println("<br> <b>Produto___: </b>" + prod.getTipo_seguro());
+                out.println("<br> <b>Descricao_: </b>" + prod.getDescricao());
+                out.println("<br> <b>Cobertura_: </b>" + prod.getCobertura());
             }else{
                 out.println("Produto não alterado!");
             }
         %>
-        
+        <a href="../produtoscadastrar/index.html">Voltar</a>
     </body>
 </html>
