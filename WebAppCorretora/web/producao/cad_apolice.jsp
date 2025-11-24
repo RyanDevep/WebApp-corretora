@@ -173,15 +173,11 @@
             <div class="row">
                 <div class="col">
                     <label>Prêmio Líquido (R$):</label>
-                    <input type="number" step="0.01" name="premio_liquido" id="premioLiq" oninput="calcularComissao()" required>
+                    <input type="number" step="0.01" name="premio_liquido" required>
                 </div>
                 <div class="col">
                     <label>Comissão (%):</label>
-                    <input type="number" step="0.01" name="percent_comissao" id="percentualComissao" oninput="calcularComissao()" required>
-                </div>
-                <div class="col">
-                    <label>PL. a Receber (R$):</label>
-                    <input type="number" step="0.01" name="pl_a_receber" id="valorComissao" readonly>
+                    <input type="number" step="0.01" name="percent_comissao" required>
                 </div>
             </div>
 
@@ -207,18 +203,5 @@
             <button type="submit">Salvar Apólice</button>
         </form>
         </div>
-    <script>
-        function calcularComissao() {
-            var premio = parseFloat(document.getElementById('premioLiq').value) || 0;
-            var porcentagem = parseFloat(document.getElementById('percentualComissao').value) || 0;
-            
-            // Cálculo simples
-            var resultado = premio * (porcentagem / 100);
-            
-            // Coloca o resultado no campo e fixa em 2 casas decimais
-            document.getElementById('valorComissao').value = resultado.toFixed(2);
-        }
-    </script>
-
 </body>
 </html>

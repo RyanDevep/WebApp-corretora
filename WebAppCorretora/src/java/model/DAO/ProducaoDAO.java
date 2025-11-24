@@ -18,7 +18,7 @@ public class ProducaoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            String de inserção das informações da Produção no banco de dados
+            //            String de inserção das informações da Produção no banco de dados.
             String sql = "INSERT INTO producao (" +
                     "id_segurado, id_seguradora, id_produtor, id_produto, id_op, " +
                     "num_apolice, vigencia, premio_liquido, percent_comissao, pl_a_receber, " +
@@ -54,7 +54,18 @@ public class ProducaoDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             //            Retorna todas os registros da tabela producao
-            String sql = "SELECT * FROM produtos";
+            String sql = "SELECT p.*, " +
+            "s.nome, s.cpf_cnpj " +
+            "se.nome_seguradora, " +
+            "pr.nome_produto, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurado s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradora se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtor prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.nome_op";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
@@ -68,11 +79,18 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
+                
+                prod.setNomeSegurado(rs.getString("nome"));
+                prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+                prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+                prod.setNomeProdutor(rs.getString("nome_produtor"));
+                prod.setNomeProduto(rs.getString("nome_produto"));
+                prod.setTipoOperacao(rs.getString("nome_op"));
                 
                 listaProducao.add(prod);
                 n_reg++;
@@ -112,9 +130,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
@@ -156,9 +174,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
@@ -200,9 +218,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
@@ -244,9 +262,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
@@ -288,9 +306,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
@@ -332,9 +350,9 @@ public class ProducaoDAO {
                 prod.setId_op(rs.getInt("id_op"));
                 prod.setNum_apolice(rs.getString("num_apolice"));
                 prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getFloat("premio_liquido"));
-                prod.setPercent_comissao(rs.getFloat("percent_comissao"));
-                prod.setPl_a_receber(rs.getFloat("pl_a_receber"));
+                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
                 prod.setSituacao(rs.getString("situacao"));
                 prod.setForma_pgto(rs.getString("forma_pgto"));
 
