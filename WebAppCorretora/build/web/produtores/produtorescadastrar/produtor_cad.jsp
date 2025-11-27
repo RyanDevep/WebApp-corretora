@@ -27,7 +27,7 @@
       
         //Gravar...
         ProdutorDAO proDAO = new ProdutorDAO();
-        if (proDAO.cadastrar(pro)) {
+        if (proDAO.cadastrar(pro)) { 
             out.println("<h3>Produtor cadastrado com sucesso!</h3>");
             //Exibição dos dados que foram cadastrados
             out.println("<b>Nome_________: </b>" + pro.getNome_produtor());

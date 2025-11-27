@@ -100,8 +100,7 @@
         </div>
         <%
         List<Producao> lista = new ArrayList(); // Cria uma lista para armazenar objeto
-
-        // Instância do Objeto
+        // Instância do Objeto Producao (Apólices)
         ProducaoDAO producDAO = new ProducaoDAO();
         lista = producDAO.consultar_geral(); // Lista recebe todos os dados da Consulta geral.
 

@@ -55,22 +55,15 @@ public class ProducaoDAO {
         Statement stmt = conn.createStatement();
         // SELECT utilizando JOIN para captar todas as informações relacionadas na tabela de lançamento.
         String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+            "SELECT p.*, s.nome AS nome_segurado, s.cpf_cnpj, " +
+            "se.nome_seguradora, pr.tipo_seguro, " +
+            "prod.nome_produtor, op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op";
-
         ResultSet rs = stmt.executeQuery(sql);
-
         int n_reg = 0;
         while (rs.next()) {
             Producao prod = new Producao(); // instância objt. (prod)
@@ -90,13 +83,10 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod); // listaProducao recebe dados do (prod)
             n_reg++;
         }
-
         conn.close();
-
         return (n_reg == 0) ? null : listaProducao;
 
     } catch (SQLException ex) {
@@ -107,28 +97,21 @@ public class ProducaoDAO {
 
     public List consultar_cpf_cnpj(String cpf_cnpj) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
             // SELECT com JOIN para buscar as apólices relacionadas ao(CPF/CNPJ) informados.
         String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+            "SELECT p.*,s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, se.nome_seguradora, " +
+            "pr.tipo_seguro,prod.nome_produtor,op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE s.cpf_cnpj = '" + cpf_cnpj + "'"; 
-
         ResultSet rs = stmt.executeQuery(sql);
 
         int n_reg = 0;
@@ -150,11 +133,9 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod);
             n_reg++;
         }
-
         conn.close();
 
         return (n_reg == 0) ? null : listaProducao;
@@ -167,28 +148,21 @@ public class ProducaoDAO {
     
     public List consultar_produto(String tipo_seguro) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
-                // SELECT com JOIN para buscar as apólices relacionadas ao (Produto) informado.
-        String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+        String sql = // SELECT com JOIN para buscar as apólices relacionadas ao (Produto) informado.
+            "SELECT p.*, s.nome AS nome_segurado, " +
+            "s.cpf_cnpj,se.nome_seguradora, " +
+            "pr.tipo_seguro,prod.nome_produtor, " +
+            "op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE pr.tipo_seguro LIKE '" + tipo_seguro + "%'";
-
         ResultSet rs = stmt.executeQuery(sql);
 
         int n_reg = 0;
@@ -210,11 +184,9 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod);
             n_reg++;
         }
-
         conn.close();
         return (n_reg == 0) ? null : listaProducao;
 
@@ -226,30 +198,24 @@ public class ProducaoDAO {
     
     public List consultar_seguradora(String seguradora) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
         // SELECT com JOIN para buscar as apólices relacionadas a (Seguradora) informada.
         String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+            "SELECT p.*,s.nome AS nome_segurado, " +
+            "s.cpf_cnpj,se.nome_seguradora, " +
+            "pr.tipo_seguro,prod.nome_produtor, " +
+            "op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE se.nome_seguradora LIKE '" + seguradora + "%'";
-
         ResultSet rs = stmt.executeQuery(sql);
-
+        
         int n_reg = 0;
         while (rs.next()) {
             Producao prod = new Producao();
@@ -269,11 +235,9 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod);
             n_reg++;
         }
-
         conn.close();
         return (n_reg == 0) ? null : listaProducao;
 
@@ -285,28 +249,21 @@ public class ProducaoDAO {
     
     public List consultar_produtor(String produtor) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
-            // SELECT com JOIN para buscar as apólices relacionadas ao (Produtor) informado.
-        String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+        String sql = // SELECT com JOIN para buscar as apólices relacionadas ao (Produtor) informado.
+            "SELECT p.*, s.nome AS nome_segurado, " +
+            "s.cpf_cnpj,se.nome_seguradora, " +
+            "pr.tipo_seguro, prod.nome_produtor, " +
+            "op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE prod.nome_produtor LIKE '" + produtor + "%'";
-
         ResultSet rs = stmt.executeQuery(sql);
 
         int n_reg = 0;
@@ -344,28 +301,22 @@ public class ProducaoDAO {
 
     public List consultar_situacao(String situacao) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
         // SELECT com JOIN para buscar as apólices relacionadas a (situação) informada.
         String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+            "SELECT p.*, s.nome AS nome_segurado, " +
+            "s.cpf_cnpj,se.nome_seguradora, " +
+            "pr.tipo_seguro,prod.nome_produtor, " +
+            "op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE p.situacao LIKE '" + situacao + "%'";
-
         ResultSet rs = stmt.executeQuery(sql);
 
         int n_reg = 0;
@@ -387,7 +338,6 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod);
             n_reg++;
         }
@@ -403,28 +353,22 @@ public class ProducaoDAO {
     
     public List consultar_vigencia(String vigencia) throws ClassNotFoundException {
     List listaProducao = new ArrayList();
-
     Connection conn = null;
     try {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
             // SELECT com JOIN para buscar as apólices relacionadas a (vigência) informada.
         String sql =
-            "SELECT p.*, " +
-            "s.nome AS nome_segurado, " +
-            "s.cpf_cnpj, " +
-            "se.nome_seguradora, " +
-            "pr.tipo_seguro, " +
-            "prod.nome_produtor, " +
-            "op.nome_op " +
-            "FROM producao p " +
+            "SELECT p.*,s.nome AS nome_segurado, " +
+            "s.cpf_cnpj,se.nome_seguradora, " +
+            "pr.tipo_seguro,prod.nome_produtor, " +
+            "op.nome_op FROM producao p " +
             "JOIN segurados s ON p.id_segurado = s.id_segurado " +
             "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
             "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
             "JOIN tipoOperacao op ON p.id_op = op.id_op " +
             "WHERE p.vigencia = '" + vigencia + "'";
-
         ResultSet rs = stmt.executeQuery(sql);
 
         int n_reg = 0;
@@ -446,11 +390,9 @@ public class ProducaoDAO {
             prod.setNomeProdutor(rs.getString("nome_produtor"));
             prod.setNomeProduto(rs.getString("tipo_seguro"));
             prod.setTipoOperacao(rs.getString("nome_op"));
-
             listaProducao.add(prod);
             n_reg++;
         }
-
         conn.close();
         return (n_reg == 0) ? null : listaProducao;
 

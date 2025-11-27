@@ -1,7 +1,7 @@
 <%-- 
-    Document   : cons_ap_segurado
+    Document   : cons_ap_produto
     Created on : 25 de nov. de 2025, 15:03:19
-    Author     : ryanb
+    Author     : Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
@@ -62,13 +62,11 @@
         <h2>Apólices</h2>
         <a class="btn-voltar" href="../apolice_tabela.jsp">Voltar</a>
         <%
-        String tipoSeguro = request.getParameter("tipo_seguro");
-        List<Producao> lista = new ArrayList<>();
+        String tipoSeguro = request.getParameter("tipo_seguro"); // recebe o parâmetro do formulário
+        List<Producao> lista = new ArrayList<>();// Cria uma lista para armazenar o resultado
 
-        ProducaoDAO producDAO = new ProducaoDAO();
-        lista = producDAO.consultar_produto(tipoSeguro);
-        // passando o parâmetro
-
+        ProducaoDAO producDAO = new ProducaoDAO(); // Instancia o DAO
+        lista = producDAO.consultar_produto(tipoSeguro);// Chama o método de consulta
         if (lista == null || lista.isEmpty()) {
             out.println("Nenhuma apólice encontrada!");
         } else {
