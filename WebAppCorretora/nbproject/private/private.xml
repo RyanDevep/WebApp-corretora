@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/web/index.html</file>
-            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/web/apolice_tabela.jsp</file>
-            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/src/java/model/DAO/ProducaoDAO.java</file>
-            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/src/java/model/Producao.java</file>
+            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/web/producao/producaocadastrar/salvar_apolice.jsp</file>
+            <file>file:/C:/Users/ryanb/OneDrive/Documentos/GitMeusProjetos/WebApp-corretora/WebAppCorretora/web/producao/apolice_tabela.jsp</file>
         </group>
     </open-files>
 </project-private>

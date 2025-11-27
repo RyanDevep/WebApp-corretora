@@ -11,14 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Consultar Produto </h2>        
+        <h1>ADS Corretora</h1>
+        <h2>Alterar Produto</h2>        
         <%                     
             // Instância do Objeto           
             Produto prod = new Produto();
-
+            // atribui valor ao objeto.
             prod.setTipo_seguro(request.getParameter("tipo_seguro"));            
             
             //Consultar CPF...
@@ -30,19 +32,29 @@
             }else{
                //Saída
         %>
-                <form method="post" action="prod_alt.jsp">
-                    <p>Produto: <input type="text" name="tipo_seguro" readonly="true" value="<%=prod.getTipo_seguro()%>"></p>
-                    <p>Descricao: <input type="text" name="descricao" required value="<%=prod.getDescricao()%>"></p>
-                    <p>Cobertura: <input type="text" name="cobertura" required value="<%=prod.getCobertura()%>"></p>
-                    <input type="submit" value="Alterar">
-                    <input type="reset" value="Limpar">
-                </form>
+        <div class="form-container">
+            <form method="post" action="prod_alt.jsp">
+                <div id="tel" class="row">
+                    <label>Produto:</label>
+                    <input type="text" name="tipo_seguro" readonly="true" value="<%=prod.getTipo_seguro()%>">
+                </div>
+                <div class="row">
+                    <label>Descricao:</label>
+                    <input type="text" name="descricao" required value="<%=prod.getDescricao()%>">
+                </div>
+                <div class="row">
+                    <label>Cobertura:</label>
+                    <input type="text" name="cobertura" required value="<%=prod.getCobertura()%>">
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
         <%
-                out.println("<br> <b>Produto___: </b>" + prod.getTipo_seguro());
-                out.println("<br> <b>Descricao_: </b>" + prod.getDescricao());
-                out.println("<br> <b>Cobertura_: </b>" + prod.getCobertura());
             }
         %>
-        <a href="../produtoscadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../produtoscadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

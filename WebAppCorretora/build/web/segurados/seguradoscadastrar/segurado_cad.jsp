@@ -12,12 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Controle de Processos</title>
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
     </head>
     <body>
-        <h1>Cadastro de Segurados</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
         // Instância do Objeto
         Segurado segu = new Segurado();
+        // Atribui valores ao objeto
         segu.setNome(request.getParameter("nome"));
         segu.setCpf_cnpj(request.getParameter("cpf_cnpj"));
         segu.setTelefone(request.getParameter("telefone"));
@@ -38,6 +41,9 @@
             out.println("<h3>Erro: Segurado não pode ser cadastrado!</h3>");
         }
         %>
-        <a href="index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="index.html">Voltar</a>
+        </div>
     </body>
 </html>

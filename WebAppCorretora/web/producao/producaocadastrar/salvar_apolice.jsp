@@ -11,10 +11,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle de Processos</title>
     </head>
     <body>
-        <h1>Cadastro de Apólice</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
         // Instância do Objeto
         Producao produc = new Producao();
@@ -50,13 +52,16 @@
       
         //Gravar...
         ProducaoDAO producDAO = new ProducaoDAO();
-        if (producDAO.cadastrar(produc)) {
+        if (producDAO.cadastrar(produc)) { // chama o método e conclui o cadastro.
             out.println("<h3>Apólice cadastrada com sucesso!</h3>");
             
         } else {
             out.println("<h3>Erro: Apólice não pode ser cadastrado!</h3>");
         }
         %>
-        <a href="../principal.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../apolice_tabela.jsp">Voltar</a>
+        </div>
     </body>
 </html>

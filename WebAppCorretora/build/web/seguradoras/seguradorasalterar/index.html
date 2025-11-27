@@ -13,15 +13,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Controle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
     </head>
     <body>
+        <h1>ADS Corretora</h1>
         <h2>Consultar Seguradora - (Alterar)</h2>
-        <p>Digite o CNPJ da seguradora que deseja alterar. </p>
-        <form method="post" action="seg_cnpj_alt.jsp">
-            <p>CNPJ:<input type="text" name="cnpj" required></p>
-            <input type="submit" value="Pesquisar">
-            <input type="reset" value="Limpar">          
-        </form>
-        <a href="../seguradorascadastrar/index.html">Voltar</a>
+        <div class="container">
+            <a href="../seguradorascadastrar/index.html">Voltar</a>
+        </div>    
+        <div class="form-container">
+            <h3>Digite o CNPJ da seguradora que deseja alterar. </h3>
+            <form method="post" action="seg_cnpj_alt.jsp">
+                <div id="tel" class="row">
+                    <label>CNPJ:</label>
+                    <input type="text" name="cnpj" required>
+                </div>
+                <button class="save" type="submit">Pesquisar</button>
+                <button type="reset">Limpar</button>          
+            </form>
+        </div>
     </body>
 </html>

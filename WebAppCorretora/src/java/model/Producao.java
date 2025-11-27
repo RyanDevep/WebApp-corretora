@@ -5,12 +5,11 @@
 package model;
 
 import java.sql.Date;
-
-/**
- *
- * @author ryanb
+/** @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
+ * Data: 15/11/2025
  */
 public class Producao {
+    //atributos
     private int id_producao;
     private int id_segurado;
     private int id_seguradora;

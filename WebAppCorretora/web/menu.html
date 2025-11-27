@@ -4,7 +4,7 @@
        <!-- 
           Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
           Created: 20/11/2025
-          Description: Página de Gerenciamento.
+          Description: Config Menu .
         -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -244,7 +244,7 @@
         style="width: 280px"
       >
         <a
-          href="/"
+            href="menu.html"
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
           <svg
@@ -253,14 +253,13 @@
             height="32"
             aria-hidden="true"
           >
-            <use xlink:href="#bootstrap"></use>
           </svg>
           <span class="fs-4">ADS Corretora</span>
         </a>
         <hr/>
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-              <a href="apolice_tabela.jsp" target="principal" class="nav-link active" aria-current="page">
+              <a href="producao/apolice_tabela.jsp" target="principal" class="nav-link active" aria-current="page">
               <svg
                 class="bi pe-none me-2"
                 width="16"
@@ -295,8 +294,8 @@
             aria-expanded="false"
           >
             <img
-                src="imagens/ads.png"
-              alt=""
+                src="imagens/logoads.png"
+              alt="ADS"
               width="32"
               height="32"
               class="rounded-circle me-2"
@@ -304,19 +303,15 @@
             <strong>usuário</strong>
           </a>
           <ul class="dropdown-menu text-small shadow">
-            <li><a class="dropdown-item" href="#">Nova Apólice...</a></li>
-            <li><a class="dropdown-item" href="#">Gerenciar</a></li>
+              <li><a class="dropdown-item" href="producao/producaocadastrar/cad_apolice.jsp" target="principal">Nova Apólice...</a></li>
+              <li><a class="dropdown-item" href="gerenciar.html" target="principal">Gerenciar</a></li>
             <li><a class="dropdown-item" href="#">Perfil</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="#">Sair</a></li>
           </ul>
         </div>
       </div>
-      <div class="b-example-divider b-example-vr"></div>
-
-
-
-      
+      <div class="b-example-divider b-example-vr"></div>    
     </main>
     <script
       src="assets/dist/js/bootstrap.bundle.min.js"

@@ -7,7 +7,6 @@ import model.Segurado;
 import Config.ConectaBanco;
 import java.sql.*;
 import java.util.*;
-
 /**
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  */
@@ -16,7 +15,7 @@ public class SeguradoDAO {
     public boolean cadastrar( Segurado seg ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar();// Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
             //            String de inserção das informações dos segurados no banco de dados
             String sql = "INSERT INTO segurados(nome, cpf_cnpj, telefone, email, endereco) VALUES('" 
@@ -47,7 +46,7 @@ public class SeguradoDAO {
             
             int n_reg = 0;
             while (rs.next()){
-                Segurado seg = new Segurado();
+                Segurado seg = new Segurado(); // Instância do Objeto.
                 seg.setId_segurado(rs.getInt("id_segurado"));
                 seg.setNome(rs.getString("nome"));
                 seg.setCpf_cnpj(rs.getString("cpf_cnpj"));
@@ -77,7 +76,7 @@ public class SeguradoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Seleciona um segurado a partir do CPF/CNPJ informado.
             String sql = "SELECT * from segurados WHERE cpf_cnpj = '" + segu.getCpf_cnpj() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
@@ -107,7 +106,7 @@ public class SeguradoDAO {
         conn = ConectaBanco.conectar();
         Statement stmt = conn.createStatement();
         
-        // Usando LIKE para permitir buscas parciais
+        //     Seleciona segurados usando LIKE para permitir buscas parciais
         String sql = "SELECT * FROM segurados WHERE nome LIKE '%" + nome + "%'";
         ResultSet rs = stmt.executeQuery(sql);
 
@@ -134,11 +133,11 @@ public class SeguradoDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            Segurado buscar = consultar_CpfCnpj(segu);
+            Segurado buscar = consultar_CpfCnpj(segu); // A busca recupera o id_segurado correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou ninguém
             }
-                    
+                    // Apaga segurado pelo id_segurado informado.
             String sql = "DELETE FROM segurados WHERE id_segurado =" + buscar.getId_segurado();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
@@ -157,7 +156,7 @@ public class SeguradoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Atualiza os dados do segurado a partir do CPF/CNPJ informado.
             String sql = "UPDATE segurados SET nome='" + seg.getNome()
                     + "', telefone='" + seg.getTelefone()
                     + "', email='" + seg.getEmail()

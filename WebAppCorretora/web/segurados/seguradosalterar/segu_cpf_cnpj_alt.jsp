@@ -11,14 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Consulta Segurado CPF/CNPJ</h2>        
+        <h1>ADS Corretora</h1>
+        <h2>Alterar Segurado CPF/CNPJ</h2>        
         <%                     
             // Instância do Objeto           
             Segurado segu = new Segurado();
-
+            // atribui valores ao objeto
             segu.setCpf_cnpj(request.getParameter("cpf_cnpj"));            
             
             //Consultar CPF/CNPJ...
@@ -30,24 +32,37 @@
             }else{
                //Saída
         %>
-                <form method="post" action="segu_alt.jsp">
-                    <p>CPF/CNPJ: <input type="text" name="cpf_cnpj" readonly="true" value="<%=segu.getCpf_cnpj()%>"></p>
-                    <p>Nome: <input type="text" name="nome" required value="<%=segu.getNome()%>"></p>
-                    <p>Telefone: <input type="text" name="telefone" required value="<%=segu.getTelefone()%>"></p>
-                    <p>Email: <input type="text" name="email" required value="<%=segu.getEmail()%>"></p>
-                    <p>Endereço: <input type="text" name="endereco" required value="<%=segu.getEndereco()%>"></p>
-                    <input type="submit" value="Alterar">
-                    <input type="reset" value="Limpar">
-            
-                </form>
+        <div class="form-container">
+            <form method="post" action="segu_alt.jsp">
+                <div id="cpf" class="row">
+                    <label>CPF/CNPJ:</label> 
+                    <input type="text" name="cpf_cnpj" readonly="true" value="<%=segu.getCpf_cnpj()%>">
+                </div>
+                <div class="row">
+                    <label>Nome:</label> 
+                    <input type="text" name="nome" required value="<%=segu.getNome()%>">
+                </div>
+                <div id="tel" class="row">
+                    <label>Telefone:</label> 
+                    <input type="text" name="telefone" required value="<%=segu.getTelefone()%>">
+                </div>
+                <div class="row">
+                    <label>Email:</label> 
+                    <input type="text" name="email" required value="<%=segu.getEmail()%>">
+                </div>
+                <div class="row">
+                    <label>Endereço:</label> 
+                    <input type="text" name="endereco" required value="<%=segu.getEndereco()%>">
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
         <%
-                out.println("<br> <b>Nome....: </b>" + segu.getNome());
-                out.println("<br> <b>CPF/CNPJ....: </b>" + segu.getCpf_cnpj());
-                out.println("<br> <b>Telefone...: </b>" + segu.getTelefone());
-                out.println("<br> <b>Email.....: </b>" + segu.getEmail());
-                out.println("<br> <b>Endereço </b>" + segu.getEndereco()); 
             }
         %>
-        <a href="../seguradoscadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../seguradoscadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

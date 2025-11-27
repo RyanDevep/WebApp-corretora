@@ -11,14 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Consulta Seguradora CNPJ</h2>        
+        <h1>ADS Corretora</h1>
+        <h2>Alterar Seguradora</h2>        
         <%                     
             // Instância do Objeto           
             Seguradora segu = new Seguradora();
-
+            // Atribui valores ao objeto.
             segu.setCnpj(request.getParameter("cnpj"));            
             
             //Consultar CNPJ...
@@ -30,22 +32,33 @@
             }else{
                //Saída
         %>
-                <form method="post" action="seg_alt.jsp">
-                    <p>CNPJ: <input type="text" name="cnpj" readonly="true" value="<%=segu.getCnpj()%>"></p>
-                    <p>Razão Social: <input type="text" name="nome_seguradora" required value="<%=segu.getNome_seguradora()%>"></p>
-                    <p>Telefone: <input type="text" name="telefone" required value="<%=segu.getTelefone()%>"></p>
-                    <p>Endereço: <input type="text" name="endereco" required value="<%=segu.getEndereco()%>"></p>
-                    <input type="submit" value="Alterar">
-                    <input type="reset" value="Limpar">
-            
-                </form>
+        <div class="form-container">
+            <form method="post" action="seg_alt.jsp">
+                <div id="cpf" class="row">
+                    <label>CNPJ:</label> 
+                    <input type="text" name="cnpj" readonly="true" value="<%=segu.getCnpj()%>">
+                </div>
+                <div class="row">
+                    <label>Razão Social:</label> 
+                    <input type="text" name="nome_seguradora" required value="<%=segu.getNome_seguradora()%>">
+                </div>
+                <div id="tel" class="row">
+                    <label>Telefone:</label> 
+                    <input type="text" name="telefone" required value="<%=segu.getTelefone()%>">
+                </div>
+                <div class="row">
+                    <label>Endereço:</label> 
+                    <input type="text" name="endereco" required value="<%=segu.getEndereco()%>">
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
         <%
-                out.println("<br> <b>Razão Socil: </b>" + segu.getNome_seguradora());
-                out.println("<br> <b>CNPJ_______: </b>" + segu.getCnpj());
-                out.println("<br> <b>Telefone___: </b>" + segu.getTelefone());
-                out.println("<br> <b>Endereço___: </b>" + segu.getEndereco()); 
             }
         %>
-        <a href="../seguradorascadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../seguradorascadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

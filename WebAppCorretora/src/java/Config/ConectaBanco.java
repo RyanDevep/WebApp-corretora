@@ -4,14 +4,12 @@
  */
 package Config;
 import java.sql.*;
-
 /** @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  * Data: 16/11/2025
  */
-
 public class ConectaBanco {
     public static Connection conectar() throws ClassNotFoundException {
-        // Abre uma conexão
+        // Abre uma conexão com o Banco de dados
         Connection conn = null; 
         try{
             Class.forName("com.mysql.jdbc.Driver");

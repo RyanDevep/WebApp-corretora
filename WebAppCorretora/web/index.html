@@ -8,19 +8,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
          <!-- 
           Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
           Created: 20/11/2025
-          Description: Página de Gerenciamento.
+          Description: Index Principal.
         -->
         <title>ADS Corretora</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
     </head>
-    <body style="margin: 0; padding: 0;">   
-        <div style="display: flex; height: calc(100vh - 50px);" >
-            <!-- Barra lateral de opções -->
-            <iframe id="menu-frame" name="menuFrame" src="menu.html" title="Menu de navegação" style="width: 305px; border: #ccc;"></iframe>
-            <!-- Área de Conteúdo -->
-            <iframe id="prin-frame" name="principal" src="apolice_tabela.jsp" title="Conteúdo Principal da página" style="flex-grow: 1; border: #ccc;"></iframe>
+    <body style="margin: 0; padding: 0; overflow: hidden;">    
+        
+        <div style="display: flex; height: 100vh; width: 100%;">
+            <iframe id="menu-frame" name="menuFrame" src="menu.html" title="Menu de navegação" style="width: 305px; border: none; background-color: #f4f4f4;"></iframe>
+            <iframe id="prin-frame" name="principal" src="producao/apolice_tabela.jsp" title="Conteúdo Principal da página" style="flex-grow: 1; border: none;"></iframe>
         </div>
     </body>
 </html>

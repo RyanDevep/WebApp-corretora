@@ -13,15 +13,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Controle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
     </head>
     <body>
+        <h1>ADS Corretora</h1>
         <h2>Consultar Operação - (Alterar)</h2>
-        <p>Digite o Tipo que deseja alterar. </p>
-        <form method="post" action="tipo_op_alt.jsp">
-            <p>Operação:<input type="text" name="nome_op" required></p>
-            <input type="submit" value="Pesquisar">
-            <input type="reset" value="Limpar">          
-        </form>
+        <div class="container">
         <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
+        <div class="form-container">
+            <h3>Digite o Tipo que deseja alterar. </h3>
+            <form method="post" action="tipo_op_alt.jsp">
+                <div id="cpf" class="row">
+                    <label>Operação:</label>
+                    <input type="text" name="nome_op" required>
+                </div>
+                <button class="save" type="submit">Pesquisar</button>
+                <button type="reset">Limpar</button>         
+            </form>
+        </div>
     </body>
 </html>

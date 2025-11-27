@@ -13,10 +13,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle</title>
     </head>
     <body>
-        <h1>Excluir Segurado</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             Segurado segu = new Segurado();
@@ -33,6 +35,9 @@
                 out.println("Segurado não excluído!");
             }
         %>
-        <a href="../seguradoscadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../seguradoscadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

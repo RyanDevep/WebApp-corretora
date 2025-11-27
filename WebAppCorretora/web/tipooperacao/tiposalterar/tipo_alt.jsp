@@ -3,20 +3,19 @@
     Created on : 20 de nov. de 2025, 17:44:08
     Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
 --%>
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.TipoOperacao"%>
 <%@page import="model.DAO.TipoOperacaoDAO"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle</title>
     </head>
     <body>
-        <h1>Alteração de Operação</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             TipoOperacao tipo = new TipoOperacao();
@@ -29,7 +28,7 @@
             //Gravar...
             TipoOperacaoDAO tipoDAO = new TipoOperacaoDAO();
             if (tipoDAO.alterar(tipo)){
-                out.println("Operacão alterada com sucesso!");
+                out.println("<h3>Operacão alterada com sucesso!</h3>");
                 //Saída
                 out.println("<br> <b>Operação__: </b>" + tipo.getNome_op());
                 out.println("<br> <b>Status____: </b>" + tipo.getStatus_op());
@@ -38,6 +37,9 @@
                 out.println("Operacão não alterada!");
             }
         %>
-        <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

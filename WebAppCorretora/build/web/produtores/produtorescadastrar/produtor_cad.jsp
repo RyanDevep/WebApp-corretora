@@ -12,9 +12,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Controle de Processos</title>
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
     </head>
     <body>
-        <h1>Cadastro de Produtor</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
         // Instância do Objeto
         Produtor pro = new Produtor();
@@ -36,6 +38,9 @@
             out.println("<h3>Erro: Produtor não pode ser cadastrado!</h3>");
         }
         %>
-        <a href="index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="index.html">Voltar</a>
+        </div>
     </body>
 </html>

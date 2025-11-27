@@ -11,14 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Consultar Operações </h2>        
+        <h1>ADS Corretora</h1>
+        <h2>Alterar Operações </h2>        
         <%                     
             // Instância do Objeto           
             TipoOperacao tipo = new TipoOperacao();
-
+            // Atribui valores ao objeto
             tipo.setNome_op(request.getParameter("nome_op"));            
             
             //Consultar CPF...
@@ -30,19 +32,29 @@
             }else{
                //Saída
         %>
-                <form method="post" action="tipo_alt.jsp">
-                    <p>Operação: <input type="text" name="nome_op" required value="<%=tipo.getNome_op()%>"></p>
-                    <p>Status: <input type="text" name="status_op" required value="<%=tipo.getStatus_op()%>"></p>
-                    <p>Descrição: <input type="text" name="descricao"required value="<%=tipo.getDescricao()%>"></p>
-                    <input type="submit" value="Alterar">
-                    <input type="reset" value="Limpar">
-                </form>
+        <div class="form-container">
+            <form method="post" action="tipo_alt.jsp">
+                <div id="tel" class="row">
+                    <label>Operação:</label> 
+                    <input type="text" name="nome_op" required value="<%=tipo.getNome_op()%>">
+                </div>
+                <div id="tel" class="row">
+                    <label>Status:</label> 
+                    <input type="text" name="status_op" required value="<%=tipo.getStatus_op()%>">
+                </div>
+                <div class="row">
+                    <label>Descrição:</label>
+                    <input type="text" name="descricao"required value="<%=tipo.getDescricao()%>">
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
         <%
-                out.println("<br> <b>Operação__: </b>" + tipo.getNome_op());
-                out.println("<br> <b>Status____: </b>" + tipo.getStatus_op());
-                out.println("<br> <b>Descricao_: </b>" + tipo.getDescricao());
             }
         %>
-        <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

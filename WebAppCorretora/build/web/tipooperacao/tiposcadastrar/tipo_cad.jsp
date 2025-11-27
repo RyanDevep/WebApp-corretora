@@ -12,12 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Controle de Processos</title>
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
     </head>
     <body>
-        <h1>Cadastro de Operações</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
         // Instância do Objeto
         TipoOperacao tipo = new TipoOperacao();
+        // Atribui valores ao objeto
         tipo.setNome_op(request.getParameter("nome_op"));
         tipo.setStatus_op(request.getParameter("status_op"));
         tipo.setDescricao(request.getParameter("descricao"));
@@ -34,6 +37,9 @@
             out.println("<h3>Erro: Operação não pode ser cadastrada!</h3>");
         }
         %>
-        <a href="index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="index.html">Voltar</a>
+        </div>
     </body>
 </html>

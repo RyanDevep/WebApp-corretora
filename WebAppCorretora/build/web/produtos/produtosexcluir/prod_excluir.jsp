@@ -10,10 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Controle</title>
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
     </head>
     <body>
-        <h1>Excluir Produto</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             Produto prod = new Produto();
@@ -30,6 +31,9 @@
                 out.println("Produto não excluído!");
             }
         %>
-        <a href="../produtoscadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../produtoscadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

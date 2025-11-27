@@ -12,11 +12,11 @@ import java.util.*;
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
  */
 public class ProducaoDAO {
-        // + cadastrar( Produto ): boolean
+        // + cadastrar( Producao ): boolean
     public boolean cadastrar( Producao produ ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar(); // Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
             //            String de inserção das informações da Produção no banco de dados.
             String sql = "INSERT INTO producao (" +
@@ -46,331 +46,421 @@ public class ProducaoDAO {
         return true;
     }
     
-    public List consultar_geral( ) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
-        
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Retorna todas os registros da tabela producao
-            String sql = "SELECT p.*, " +
-            "s.nome, s.cpf_cnpj " +
+    public List consultar_geral() throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
+
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+        // SELECT utilizando JOIN para captar todas as informações relacionadas na tabela de lançamento.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
             "se.nome_seguradora, " +
-            "pr.nome_produto, " +
+            "pr.tipo_seguro, " +
             "prod.nome_produtor, " +
             "op.nome_op " +
             "FROM producao p " +
-            "JOIN segurado s ON p.id_segurado = s.id_segurado " +
-            "JOIN seguradora se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
             "JOIN produtos pr ON p.id_produto = pr.id_produto " +
-            "JOIN produtor prod ON p.id_produtor = prod.id_produtor " +
-            "JOIN tipoOperacao op ON p.id_op = op.nome_op";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
-            
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
-                
-                prod.setNomeSegurado(rs.getString("nome"));
-                prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
-                prod.setNomeSeguradora(rs.getString("nome_seguradora"));
-                prod.setNomeProdutor(rs.getString("nome_produtor"));
-                prod.setNomeProduto(rs.getString("nome_produto"));
-                prod.setTipoOperacao(rs.getString("nome_op"));
-                
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
-            
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op";
+
+        ResultSet rs = stmt.executeQuery(sql);
+
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao(); // instância objt. (prod)
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
+
+            listaProducao.add(prod); // listaProducao recebe dados do (prod)
+            n_reg++;
+        }
+
+        conn.close();
+
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
     }
+}
+
+    public List consultar_cpf_cnpj(String cpf_cnpj) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
+
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+            // SELECT com JOIN para buscar as apólices relacionadas ao(CPF/CNPJ) informados.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE s.cpf_cnpj = '" + cpf_cnpj + "'"; 
+
+        ResultSet rs = stmt.executeQuery(sql);
+
+        int n_reg = 0;
+        while (rs.next()) { 
+            Producao prod = new Producao();
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
+
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
+    }
+}
     
-    public List consultar_segurado(String cpfCnpj) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
+    public List consultar_produto(String tipo_seguro) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
 
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da producao pelo CPF/CNPJ do segurado
-            String sql = "SELECT p.* FROM producao p JOIN segurado s ON p.id_segurado = s.id_segurado WHERE s.cpf_cnpj LIKE '" + cpfCnpj + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+                // SELECT com JOIN para buscar as apólices relacionadas ao (Produto) informado.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE pr.tipo_seguro LIKE '" + tipo_seguro + "%'";
 
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
+        ResultSet rs = stmt.executeQuery(sql);
 
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao();
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
 
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
     }
+}
     
-    public List consultar_produto(String nomeProduto) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
+    public List consultar_seguradora(String seguradora) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
 
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da Producao pelo nome do Produto.
-            String sql = "SELECT p.* FROM producao p JOIN produtos prod ON p.id_produto = prod.id_produto WHERE prod.nome_produto LIKE '" + nomeProduto + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+        // SELECT com JOIN para buscar as apólices relacionadas a (Seguradora) informada.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE se.nome_seguradora LIKE '" + seguradora + "%'";
 
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
+        ResultSet rs = stmt.executeQuery(sql);
 
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao();
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
 
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
     }
+}
     
-    public List consultar_produtor(String nomeProdutor) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
+    public List consultar_produtor(String produtor) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
 
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da Producao pelo nome do Produtor.
-            String sql = "SELECT p.* FROM producao p JOIN produtor prod ON p.id_produtor = prod.id_produtor WHERE prod.nome LIKE '" + nomeProdutor + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+            // SELECT com JOIN para buscar as apólices relacionadas ao (Produtor) informado.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE prod.nome_produtor LIKE '" + produtor + "%'";
 
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
+        ResultSet rs = stmt.executeQuery(sql);
 
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao();
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
 
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
     }
+}
+
+    public List consultar_situacao(String situacao) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
+
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+        // SELECT com JOIN para buscar as apólices relacionadas a (situação) informada.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE p.situacao LIKE '" + situacao + "%'";
+
+        ResultSet rs = stmt.executeQuery(sql);
+
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao();
+            // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+            // Campos relacionados
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
+
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
+    }
+}
     
-    public List consultar_seguradora(String nomeSeguradora) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
+    public List consultar_vigencia(String vigencia) throws ClassNotFoundException {
+    List listaProducao = new ArrayList();
 
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da Producao pelo nome do Produtor.
-            String sql = "SELECT p.* FROM producao p JOIN seguradora s ON p.id_seguradora = s.id_seguradora WHERE s.nome LIKE '" + nomeSeguradora + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
+    Connection conn = null;
+    try {
+        conn = ConectaBanco.conectar();
+        Statement stmt = conn.createStatement();
+            // SELECT com JOIN para buscar as apólices relacionadas a (vigência) informada.
+        String sql =
+            "SELECT p.*, " +
+            "s.nome AS nome_segurado, " +
+            "s.cpf_cnpj, " +
+            "se.nome_seguradora, " +
+            "pr.tipo_seguro, " +
+            "prod.nome_produtor, " +
+            "op.nome_op " +
+            "FROM producao p " +
+            "JOIN segurados s ON p.id_segurado = s.id_segurado " +
+            "JOIN seguradoras se ON p.id_seguradora = se.id_seguradora " +
+            "JOIN produtos pr ON p.id_produto = pr.id_produto " +
+            "JOIN produtores prod ON p.id_produtor = prod.id_produtor " +
+            "JOIN tipoOperacao op ON p.id_op = op.id_op " +
+            "WHERE p.vigencia = '" + vigencia + "'";
 
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
+        ResultSet rs = stmt.executeQuery(sql);
 
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
+        int n_reg = 0;
+        while (rs.next()) {
+            Producao prod = new Producao();
+             // Campos da tabela producao
+            prod.setId_producao(rs.getInt("id_producao"));
+            prod.setNum_apolice(rs.getString("num_apolice"));
+            prod.setVigencia(rs.getDate("vigencia"));
+            prod.setPremio_liquido(rs.getDouble("premio_liquido"));
+            prod.setPercent_comissao(rs.getDouble("percent_comissao"));
+            prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
+            prod.setSituacao(rs.getString("situacao"));
+            prod.setForma_pgto(rs.getString("forma_pgto"));
+             // Campos da tabela producao
+            prod.setNomeSegurado(rs.getString("nome_segurado"));
+            prod.setCpf_cnpj(rs.getString("cpf_cnpj"));
+            prod.setNomeSeguradora(rs.getString("nome_seguradora"));
+            prod.setNomeProdutor(rs.getString("nome_produtor"));
+            prod.setNomeProduto(rs.getString("tipo_seguro"));
+            prod.setTipoOperacao(rs.getString("nome_op"));
 
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
+            listaProducao.add(prod);
+            n_reg++;
+        }
+
+        conn.close();
+        return (n_reg == 0) ? null : listaProducao;
+
+    } catch (SQLException ex) {
+        System.out.println("Erro SQL: " + ex);
+        return null;
     }
-    
-    public List consultar_situacao(String situacao) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
+}
 
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da Producao pela situação.
-            String sql = "SELECT * FROM producao WHERE situacao LIKE '" + situacao + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
 
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
-
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
-
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
-    }
-    
-    public List consultar_vigencia(String vigencia) throws ClassNotFoundException{
-        List listaProducao = new ArrayList();
-
-        Connection conn = null;
-        try{
-            conn = ConectaBanco.conectar();
-            Statement stmt = conn.createStatement();
-            //            Consulta da Producao pela vigencia.
-            String sql = "SELECT * FROM producao WHERE vigencia LIKE '" + vigencia + "%'";
-            ResultSet rs = stmt.executeQuery(sql); // SELECT
-
-            int n_reg = 0;
-            while (rs.next()){
-                Producao prod = new Producao();
-                prod.setId_producao(rs.getInt("id_producao"));
-                prod.setId_segurado(rs.getInt("id_segurado"));
-                prod.setId_seguradora(rs.getInt("id_seguradora"));
-                prod.setId_produtor(rs.getInt("id_produtor"));
-                prod.setId_produto(rs.getInt("id_produto"));
-                prod.setId_op(rs.getInt("id_op"));
-                prod.setNum_apolice(rs.getString("num_apolice"));
-                prod.setVigencia(rs.getDate("vigencia"));
-                prod.setPremio_liquido(rs.getDouble("premio_liquido"));
-                prod.setPercent_comissao(rs.getDouble("percent_comissao"));
-                prod.setPl_a_receber(rs.getDouble("pl_a_receber"));
-                prod.setSituacao(rs.getString("situacao"));
-                prod.setForma_pgto(rs.getString("forma_pgto"));
-
-                listaProducao.add(prod);
-                n_reg++;
-            }
-            conn.close();
-
-            if (n_reg == 0){
-                return null;
-            }else{
-                return listaProducao;
-            }                                   
-        }catch(SQLException ex){
-            System.out.println("Erro SQL: " + ex);
-            return null;
-        }        
-    }
 
 }
 

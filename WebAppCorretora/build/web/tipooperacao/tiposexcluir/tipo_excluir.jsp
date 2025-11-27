@@ -10,18 +10,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle</title>
     </head>
     <body>
-        <h1>Excluir Operação</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             TipoOperacao tipo = new TipoOperacao();
-            
             // Atrib. valores ao obj
             tipo.setNome_op(request.getParameter("nome_op"));
-           
-            
             //Excluir...
             TipoOperacaoDAO tipoDAO = new TipoOperacaoDAO();
             if (tipoDAO.excluir(tipo)){
@@ -30,6 +29,9 @@
                 out.println("Operação não excluída!");
             }
         %>
-        <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

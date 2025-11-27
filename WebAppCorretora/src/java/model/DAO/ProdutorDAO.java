@@ -5,10 +5,8 @@
 package model.DAO;
 import model.Produtor;
 import Config.ConectaBanco;
-
 import java.sql.*;
 import java.util.*;
-
 /**
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
@@ -18,7 +16,7 @@ public class ProdutorDAO {
     public boolean cadastrar( Produtor pro ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar();// Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
             //            String de inserção das informações dos produtores no banco de dados
             String sql = "INSERT INTO produtores (nome_produtor, cpf, telefone, email) VALUES ('"
@@ -42,7 +40,7 @@ public class ProdutorDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            Retorna todas os registros da tabela produtores
+            //            Retorna todas os registros da tabela produtores.
             String sql = "SELECT * from produtores";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
@@ -77,12 +75,12 @@ public class ProdutorDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Seleciona um Produtor a partir do CPF informado.
             String sql = "SELECT * from produtores WHERE cpf = '" + prod.getCpf() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
             if (rs.next()){
-                Produtor pro = new Produtor();
+                Produtor pro = new Produtor(); // Instância do ojeto.
                 pro.setId_produtor(rs.getInt("id_produtor"));
                 pro.setNome_produtor(rs.getString("nome_produtor"));
                 pro.setCpf(rs.getString("cpf"));
@@ -105,11 +103,11 @@ public class ProdutorDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            Produtor buscar = consultar_Cpf(pro);
+            Produtor buscar = consultar_Cpf(pro); // A busca recupera o id_produtor correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou ninguém
             }
-                    
+                    //      Apaga o produtor a partir do id_produtor informado
             String sql = "DELETE FROM produtores WHERE id_produtor =" + buscar.getId_produtor();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
@@ -128,7 +126,7 @@ public class ProdutorDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Atualiza os dados do produtor a partir do CPF informado.
             String sql = "UPDATE produtores SET nome_produtor='" + pro.getNome_produtor()
                     + "', telefone='" + pro.getTelefone()
                     + "', email='" + pro.getEmail()

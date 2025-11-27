@@ -13,10 +13,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle</title>
     </head>
     <body>
-        <h1>Alteração de Seguradora</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             Seguradora segu = new Seguradora();
@@ -27,7 +29,7 @@
             segu.setTelefone( request.getParameter("telefone"));
             segu.setEndereco( request.getParameter("endereco"));
             
-            //Gravar...
+            //Gravar alteração...
             SeguradoraDAO seguDAO = new SeguradoraDAO();
             if (seguDAO.alterar(segu)){
                 out.println("Seguradora alterada com sucesso!");
@@ -40,6 +42,9 @@
                 out.println("Segurado não alterado!");
             }
         %>
-        <a href="../seguradorascadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../seguradorascadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

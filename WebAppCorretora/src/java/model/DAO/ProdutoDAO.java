@@ -7,7 +7,6 @@ import model.Produto;
 import Config.ConectaBanco;
 import java.sql.*;
 import java.util.*;
-
 /**
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
@@ -17,7 +16,7 @@ public class ProdutoDAO {
     public boolean cadastrar( Produto prod ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar();// Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
             //            String de inserção das informações dos produtos no banco de dados
             String sql = "INSERT INTO produtos (tipo_seguro, descricao, cobertura) VALUES ('"
@@ -45,14 +44,14 @@ public class ProdutoDAO {
             ResultSet rs = stmt.executeQuery(sql); // SELECT
             
             int n_reg = 0;
-            while (rs.next()){
-                Produto prod = new Produto();
+            while (rs.next()){ 
+                Produto prod = new Produto(); // instância do objt.
                 prod.setId_produto(rs.getInt("id_produto"));
                 prod.setTipo_seguro(rs.getString("tipo_seguro"));
                 prod.setDescricao(rs.getString("descricao"));
                 prod.setCobertura(rs.getString("cobertura"));
                 
-                listaProdutos.add(prod);
+                listaProdutos.add(prod); // listaProdutos recebe dados do (prod)
                 n_reg++;
             }
             conn.close();
@@ -74,7 +73,7 @@ public class ProdutoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+                    //  Seleciona um produto pelo (tipo_seguro) informado.          
             String sql = "SELECT * from produtos WHERE tipo_seguro = '" + produ.getTipo_seguro() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
@@ -101,11 +100,11 @@ public class ProdutoDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            Produto buscar = consultar_prod(prod);
+            Produto buscar = consultar_prod(prod);// A busca recupera o id_produto correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou ninguém
             }
-                    
+                    // Apaga um produto a partir do id_produto informado
             String sql = "DELETE FROM produtos WHERE id_produto =" + buscar.getId_produto();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
@@ -124,7 +123,7 @@ public class ProdutoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //         Atualiza o produto a partir do (tipo_seguro).    
             String sql = "UPDATE produtos SET descricao ='" + prod.getDescricao()
                     + "', cobertura ='" + prod.getCobertura()
                     + "' WHERE tipo_seguro = '" + prod.getTipo_seguro() +"'";

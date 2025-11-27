@@ -5,10 +5,8 @@
 package model.DAO;
 import model.Seguradora;
 import Config.ConectaBanco;
-
 import java.sql.*;
 import java.util.*;
-
 /**
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
@@ -18,9 +16,9 @@ public class SeguradoraDAO {
     public boolean cadastrar( Seguradora segu ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar();// Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
-            //            String de inserção das informações dos segurados no banco de dados
+            //            String de inserção das informações das seguradoras no banco de dados
             String sql = "INSERT INTO seguradoras (nome_seguradora, cnpj, telefone, endereco) VALUES ('"
                     + segu.getNome_seguradora() + "', '"
                     + segu.getCnpj() + "', '"
@@ -77,7 +75,7 @@ public class SeguradoraDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Seleciona as informações da Seguradora a partir do CNPJ informado.
             String sql = "SELECT * from seguradoras WHERE cnpj = '" + segu.getCnpj() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
@@ -105,11 +103,11 @@ public class SeguradoraDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            Seguradora buscar = consultar_Cnpj(segu);
+            Seguradora buscar = consultar_Cnpj(segu);// A busca recupera o id_seguradora correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou nada
             }
-                    
+            //          Apaga uma seguradora a partir do id_seguradora informado.
             String sql = "DELETE FROM seguradoras WHERE id_seguradora =" + buscar.getId_seguradora();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
@@ -128,7 +126,7 @@ public class SeguradoraDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Atualiza os dados da seguradora a partir do CNPJ informado.
             String sql = "UPDATE seguradoras SET "
                     + "nome_seguradora='" + segu.getNome_seguradora()
                     + "', cnpj='" + segu.getCnpj()

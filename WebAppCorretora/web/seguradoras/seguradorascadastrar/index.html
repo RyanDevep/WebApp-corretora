@@ -13,23 +13,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Gerenciar</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
     </head>
     <body>
+        <h1>ADS Corretora</h1>
         <h2>Gerenciar Seguradoras</h2>
-        <a href="../seguradorasalterar/index.html">Alterar</a>
-        <a href="../seguradorasexcluir/index.html">Excluir</a>
-        <a href="../seguradorasconsultar/seg_tabela.jsp">Consultar</a>
-        <a href="../../gerenciar.html">MENU</a>
+        <div class="container">
+            <a class="bot" href="../../gerenciar.html">MENU 🏠︎</a>
+            <a class="bot" href="../seguradorasconsultar/seg_tabela.jsp">Consultar</a>
+            <a class="bot" href="../seguradorasalterar/index.html">Alterar</a>
+            <a class="bot" id="ex" href="../seguradorasexcluir/index.html">Excluir</a>
+        </div>
         <h3>Cadastrar nova Seguradora:</h3>
-        <form method="post" action="seguradora_cad.jsp">
-        <fieldset>
-            <p>Razão Social:<input type="text" name="nome_seguradora" size="50" maxlength="100" required></p>
-            <p>CNPJ:<input type="text" name="cnpj" size="18" maxlength="18" required></p>
-            <p>Telefone:<input type="text" name="telefone" size="15" maxlength="15" required></p>
-            <p>Endereço:<input type="text" name="endereco" size="50" maxlength="150" required></p>
-        </fieldset>
-        <input type="submit" value="Salvar">
-        <input type="reset" value="Limpar">
-    </form>
+        <div class="form-container">
+            <form method="post" action="seguradora_cad.jsp">
+                <div class="row">
+                    <label>Razão Social:</label>
+                    <input type="text" name="nome_seguradora" size="50" maxlength="100" required>
+                </div>
+                <div id="cpf" class="row">
+                    <label>CNPJ:</label>
+                    <input type="text" name="cnpj" size="18" maxlength="18" required>
+                </div>
+                <div id="tel" class="row">
+                    <label>Telefone:</label>
+                    <input type="text" name="telefone" size="15" maxlength="15" required>
+                </div>
+                <div class="row">
+                    <label>Endereço:</label>
+                    <input type="text" name="endereco" size="50" maxlength="150" required>
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
+        </div>
     </body>
 </html>

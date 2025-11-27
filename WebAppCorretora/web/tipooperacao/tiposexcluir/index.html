@@ -13,15 +13,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Controle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
     </head>
     <body>
-        <h2>Consultar Operação - (Excluir)</h2>
-        <p>Digite a Operação que deseja excluir. </p>
-        <form method="post" action="tipo_excluir.jsp">
-            <p>Operação:<input type="text" name="nome_op" required></p>
-            <input type="submit" value="Excluir">
-            <input type="reset" value="Limpar">
-        </form>
-        <a href="../tiposcadastrar/index.html">Voltar</a>
+        <h1>ADS Corretora</h1>
+        <h2>Operação - (Excluir)</h2>
+        <div class="form-container">
+            <h3>Digite a Operação que deseja excluir</h3>
+            <form method="post" action="tipo_excluir.jsp">
+                <div class="row">
+                    <label>Operação:</label>
+                    <input type="text" name="nome_op" required>
+                </div>
+                <button class="excluir" type="submit">Excluir</button>
+                <button type="reset">Limpar</button>
+            </form>
+        </div>
+        <div class="botao">
+            <a href="../tiposcadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>

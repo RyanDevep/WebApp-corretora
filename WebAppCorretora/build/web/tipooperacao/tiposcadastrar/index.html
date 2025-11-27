@@ -13,22 +13,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Gerenciar</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style_geral/cadastro_geral.css"/>
     </head>
     <body>
+        <h1>ADS Corretora</h1>
         <h2>Gerenciar Operações</h2>
-        <a href="../tiposalterar/index.html">Alterar</a>
-        <a href="../tiposexcluir/index.html">Excluir</a>
-        <a href="../tiposconsultar/tipo_tabela.jsp">Consultar</a>
-        <a href="../../gerenciar.html">MENU</a>
+        <div class="container">
+            <a class="bot" href="../../gerenciar.html">MENU 🏠︎</a>
+            <a class="bot" href="../tiposconsultar/tipo_tabela.jsp">Consultar</a>
+            <a class="bot" href="../tiposalterar/index.html">Alterar</a>
+            <a class="bot" id="ex" href="../tiposexcluir/index.html">Excluir</a>
+        </div>
         <h3>Cadastrar nova Operação:</h3>
-        <form method="post" action="tipo_cad.jsp">
-        <fieldset>
-            <p>Operação:<input type="text" name="nome_op" size="20" maxlength="20" required></p>
-            <p>Status:<input type="text" name="status_op" size="15" maxlength="15" required></p>
-            <p>Descricao:<input type="text" name="descricao" size="50" maxlength="100" required></p>
-        </fieldset>
-        <input type="submit" value="Salvar">
-        <input type="reset" value="Limpar">
-    </form>
+        <div class="form-container">
+            <form method="post" action="tipo_cad.jsp">
+                <div id="tel" class="row">
+                    <label>Operação:</label>
+                    <input type="text" name="nome_op" size="20" maxlength="20" required>  
+                </div>
+                <div id="cpf" class="row">
+                    <label>Status:</label>
+                    <input type="text" name="status_op" size="15" maxlength="15" required>
+                </div>
+                <div class="row">
+                    <label>Descricao:</label>
+                    <input type="text" name="descricao" size="50" maxlength="100" required>
+                </div>
+                <button class="save" type="submit">Salvar</button>
+                <button type="reset">Limpar</button>
+            </form>
+        </div>
     </body>
 </html>

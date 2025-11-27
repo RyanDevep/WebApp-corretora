@@ -5,10 +5,8 @@
 package model.DAO;
 import model.TipoOperacao;
 import Config.ConectaBanco;
-
 import java.sql.*;
 import java.util.*;
-
 /**
  *
  * @author Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
@@ -18,7 +16,7 @@ public class TipoOperacaoDAO {
     public boolean cadastrar( TipoOperacao tipo_op ) throws ClassNotFoundException{    
         Connection conn = null;
         try{
-            conn = ConectaBanco.conectar();
+            conn = ConectaBanco.conectar();// Abre uma conexão com o banco de dados.
             Statement stmt = conn.createStatement();
             //            String de inserção das informações de tipo no banco de dados
             String sql = "INSERT INTO tipoOperacao (nome_op, status_op, descricao) VALUES ('"
@@ -75,7 +73,7 @@ public class TipoOperacaoDAO {
         try{
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
-            //            
+            //            Seleciona os dados do TipoOperacao a partir do nome informado.
             String sql = "SELECT * from tipoOperacao WHERE nome_op = '" + t_tipo.getNome_op() + "'";
             ResultSet rs = stmt.executeQuery(sql); // SELECT
 
@@ -102,11 +100,11 @@ public class TipoOperacaoDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            TipoOperacao buscar = consultar_tipo(tipo);
+            TipoOperacao buscar = consultar_tipo(tipo); // A busca recupera o id_op correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou ninguém
             }
-                    
+                    // Apaga um tip de operação a partir do id_op informado.
             String sql = "DELETE FROM tipoOperacao WHERE id_op =" + buscar.getId_op();
             int result = stmt.executeUpdate(sql); // GO - RUN -> INSERT, UPDATE, DELETE
             if (result == 0) {
@@ -126,11 +124,11 @@ public class TipoOperacaoDAO {
             conn = ConectaBanco.conectar();
             Statement stmt = conn.createStatement();
             
-            TipoOperacao buscar = consultar_tipo(tipo);
+            TipoOperacao buscar = consultar_tipo(tipo);// A busca recupera o id_op correto para realizar o UPDATE/DELETE.
             if (buscar == null) {
             return false;// não encontrou ninguém
             }
-            //            
+            //            Atualiza as informações do tipo de operação a partir do id_op informado.
             String sql = "UPDATE tipoOperacao SET nome_op ='" + tipo.getNome_op()
                     + "', status_op ='" + tipo.getStatus_op()
                     + "', descricao ='" + tipo.getDescricao()

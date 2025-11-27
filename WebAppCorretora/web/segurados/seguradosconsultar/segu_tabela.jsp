@@ -13,37 +13,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tabela</title>
-        
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 100%
-            }
-            th{
-                padding: 8px;
-                text-align: left;
-                border: 1px solid #DDD;
-                background-color: lightseagreen;
-                color: white;
-            }
-            td{
-                padding: 8px;
-                text-align: left;
-                border: 1px solid #DDD
-            }
-            tr:hover {background-color: #D6EEEE}
-        </style>
-        
+        <link rel="stylesheet" href="../../style_geral/tabelas.css"/>
     </head>
     <body>
+        <h1>ADS Corretora</h1>
         <h2>Todos os Segurados</h2>
         <a href="../seguradoscadastrar/index.html">Voltar</a>
         <%
-            List<Segurado> lista = new ArrayList();
+            List<Segurado> lista = new ArrayList();// Cria uma lista para armazenar objeto
                     
             // Instância do Objeto           
-            //Consultar Geral...
             SeguradoDAO seguDAO = new SeguradoDAO();
+            //Consultar Geral...
             lista = seguDAO.consultar_geral();
             if (seguDAO.consultar_geral() == null){
                 out.println("Segurado não encontrado!");

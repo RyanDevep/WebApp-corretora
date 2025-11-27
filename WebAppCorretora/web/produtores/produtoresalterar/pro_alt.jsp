@@ -3,20 +3,19 @@
     Created on : 20 de nov. de 2025, 17:44:08
     Author: Ryan B. | Camila S. | Miguel L. | Murilo C. | Fernando R.
 --%>
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Produtor"%>
 <%@page import="model.DAO.ProdutorDAO"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../../style_geral/sucesso.css"/>
         <title>Controle</title>
     </head>
     <body>
-        <h1>Alteração de Produtor</h1>
+        <h1>ADS Corretora</h1>
+        <div class="container">
         <%
             // Instância do Objeto
             Produtor pro = new Produtor();
@@ -40,6 +39,9 @@
                 out.println("Produtor não alterado!");
             }
         %>
-        <a href="../produtorescadastrar/index.html">Voltar</a>
+        </div>
+        <div class="botao">
+            <a href="../produtorescadastrar/index.html">Voltar</a>
+        </div>
     </body>
 </html>
